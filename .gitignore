@@ -47,3 +47,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
+.env*
+
+# agent skill docs auto-instalados pela integração Neon (Vercel CLI) — não
+# fazem parte da aplicação
+/.agents
+/.claude/skills
+/skills-lock.json

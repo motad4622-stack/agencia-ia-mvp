@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "MeetingRequest" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "clientName" TEXT NOT NULL,
     "clientEmail" TEXT NOT NULL,
     "clientPhone" TEXT,
@@ -8,13 +8,15 @@ CREATE TABLE "MeetingRequest" (
     "propertyType" TEXT NOT NULL,
     "message" TEXT,
     "status" TEXT NOT NULL DEFAULT 'novo',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "MeetingRequest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "WebsiteLead" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "clientName" TEXT NOT NULL,
     "clientEmail" TEXT NOT NULL,
     "clientPhone" TEXT,
@@ -24,6 +26,8 @@ CREATE TABLE "WebsiteLead" (
     "budgetRange" TEXT,
     "message" TEXT,
     "status" TEXT NOT NULL DEFAULT 'novo',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "WebsiteLead_pkey" PRIMARY KEY ("id")
 );

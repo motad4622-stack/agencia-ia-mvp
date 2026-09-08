@@ -1,15 +1,16 @@
-// Prisma schema — Agência de IA (Vídeos de Alojamento + Sites com IA)
+// Prisma schema — NextIA Marketing (Vídeos de Alojamento + Sites com IA)
 //
-// MVP: SQLite local (fácil de demonstrar, zero configuração).
-// Produção: trocar `provider` para "postgresql" e `DATABASE_URL` para a
-// connection string do Postgres/Supabase — o resto do schema não muda.
+// Produção: Postgres (Neon, via integração Vercel Marketplace).
+// Desenvolvimento local: se preferires SQLite em vez de apontar para o
+// Postgres de produção, troca `provider` para "sqlite" e `DATABASE_URL`
+// no .env para "file:./dev.db" — o resto do schema não muda.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
