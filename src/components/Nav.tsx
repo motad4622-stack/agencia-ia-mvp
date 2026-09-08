@@ -6,7 +6,7 @@ export function Nav() {
     <header className="border-b border-gray-200 bg-white/80 backdrop-blur sticky top-0 z-40">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <Logo />
+          <Logo compact />
         </Link>
         <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-gray-600">
           <Link href="/videos" className="hover:text-brand">

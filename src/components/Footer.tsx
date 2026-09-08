@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="border-t border-gray-200 bg-gray-50 mt-auto">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex flex-col items-center sm:items-start gap-2">
-          <Logo withSubtitle />
+          <Logo />
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} {BRAND_NAME}. Todos os direitos reservados.
           </p>

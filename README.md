@@ -106,7 +106,6 @@ de ser alterado para a app passar a usar serviços reais:
 | Agenda de reuniões | `NEXT_PUBLIC_BOOKING_URL` | [`src/app/videos/marcar-reuniao/page.tsx`](src/app/videos/marcar-reuniao/page.tsx), [`src/components/BookingEmbed.tsx`](src/components/BookingEmbed.tsx) |
 | Emails | `RESEND_API_KEY` + `EMAIL_FROM` | [`src/lib/email.ts`](src/lib/email.ts) |
 | Base de dados de produção | trocar `provider = "sqlite"` para `"postgresql"` em `prisma/schema.prisma` e apontar `DATABASE_URL` para o Postgres/Supabase | [`prisma/schema.prisma`](prisma/schema.prisma) |
-| Logótipo real | troca o componente `Logo` por um `<Image src="/logo.png" .../>` | [`src/components/Logo.tsx`](src/components/Logo.tsx) |
 
 O preço de referência do vídeo (49€ por omissão) é uma constante única em
 [`src/lib/brand.ts`](src/lib/brand.ts) (`VIDEO_PRICE_EUR`).
@@ -123,7 +122,7 @@ src/lib/
   auth.ts                     Autenticação simples do admin (password única)
   prisma.ts                   Cliente Prisma singleton
 src/components/
-  Logo.tsx                    Logótipo (SVG placeholder — trocar pelo ficheiro real)
+  Logo.tsx                    Logótipo (public/logo.png)
   Nav.tsx / Footer.tsx        Navegação e rodapé
   BookingEmbed.tsx             Agenda embutida (Google Calendar ou Calendly)
   MeetingRequestForm.tsx      Formulário de fallback (sem agenda ligada)
