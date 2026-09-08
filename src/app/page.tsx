@@ -92,10 +92,10 @@ export default function HomePage() {
 
           {/* Composição visual dos dois serviços */}
           <div className="relative lg:pl-6">
-            <VideoFrame duration="0:24" />
+            <VideoFrame duration="0:24" className="w-[92%]" />
             <BrowserFrame
               withChat
-              className="relative z-10 -mt-10 ml-auto w-[78%] sm:-mt-14"
+              className="relative z-10 -mt-12 ml-auto w-[72%] rounded-xl ring-6 ring-white sm:-mt-16"
             />
           </div>
         </div>
@@ -281,9 +281,16 @@ export default function HomePage() {
           <Reveal delay={80}>
             <div className="mt-14 grid gap-8 md:grid-cols-2">
               <VideoFrame duration="0:24" caption="Vídeo walkthrough — apartamento T2" />
-              <VideoFrame duration="0:38" caption="Vídeo walkthrough — moradia com exterior" />
+              <VideoFrame
+                duration="0:38"
+                variant="exterior"
+                caption="Vídeo walkthrough — moradia com exterior"
+              />
               <BrowserFrame withChat caption="Site com chatbot de apoio ao cliente" />
-              <BrowserFrame caption="Site institucional com automação de contactos" />
+              <BrowserFrame
+                variant="conteudo"
+                caption="Site institucional com automação de contactos"
+              />
             </div>
           </Reveal>
         </div>
