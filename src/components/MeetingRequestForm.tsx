@@ -40,7 +40,7 @@ export function MeetingRequestForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-5">
         <Field label="Nome" name="clientName" required />
         <Field label="Email" name="clientEmail" type="email" required />
         <Field label="Telefone (opcional)" name="clientPhone" />
@@ -48,15 +48,8 @@ export function MeetingRequestForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Tipo de alojamento
-        </label>
-        <select
-          name="propertyType"
-          required
-          defaultValue="airbnb"
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
-        >
+        <label className="field-label">Tipo de alojamento</label>
+        <select name="propertyType" required defaultValue="airbnb" className="input">
           <option value="airbnb">Airbnb</option>
           <option value="alojamento_local">Alojamento Local</option>
           <option value="hotel">Hotel</option>
@@ -64,24 +57,18 @@ export function MeetingRequestForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Mensagem (opcional)
-        </label>
+        <label className="field-label">Mensagem (opcional)</label>
         <textarea
           name="message"
           rows={4}
           placeholder="Conta-nos um pouco sobre o imóvel e o que procuras…"
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+          className="input resize-none"
         />
       </div>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={submitting}
-        className="w-full rounded-full bg-[#0b2545] text-white font-semibold px-6 py-3 hover:bg-[#123a6b] disabled:opacity-50 transition-colors"
-      >
+      <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-50">
         {submitting ? "A enviar…" : "Pedir reunião"}
       </button>
     </form>
@@ -101,13 +88,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <input
-        name={name}
-        type={type}
-        required={required}
-        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
-      />
+      <label className="field-label">{label}</label>
+      <input name={name} type={type} required={required} className="input" />
     </div>
   );
 }

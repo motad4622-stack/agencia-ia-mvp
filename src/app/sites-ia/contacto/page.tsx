@@ -60,28 +60,25 @@ export default function ContactoSitesIaPage() {
   }
 
   return (
-    <section className="mx-auto max-w-2xl px-4 sm:px-6 py-16 w-full">
-      <h1 className="text-3xl font-bold text-brand">Pedido de briefing</h1>
-      <p className="mt-2 text-gray-600">
-        Conta-nos sobre o teu negócio — entramos em contacto em 24h úteis.
-      </p>
+    <section className="mx-auto max-w-2xl px-4 sm:px-6 py-20 w-full">
+      <div className="text-center mb-10">
+        <p className="eyebrow mx-auto mb-6">Sites com IA para Empresas</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-ink">Pedido de briefing</h1>
+        <p className="mt-3 text-body max-w-md mx-auto">
+          Conta-nos sobre o teu negócio — entramos em contacto em 24h úteis.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-        <div className="grid sm:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="card p-8 sm:p-10 space-y-7">
+        <div className="grid sm:grid-cols-2 gap-5">
           <Field label="Nome" name="clientName" required />
           <Field label="Email" name="clientEmail" type="email" required />
           <Field label="Telefone (opcional)" name="clientPhone" />
           <Field label="Nome da empresa" name="companyName" required />
           <Field label="Tipo de negócio / setor" name="businessType" required />
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Orçamento aproximado
-            </label>
-            <select
-              name="budgetRange"
-              defaultValue=""
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
-            >
+            <label className="field-label">Orçamento aproximado</label>
+            <select name="budgetRange" defaultValue="" className="input">
               <option value="">Não sei ainda</option>
               <option value="<1000">Menos de 1000€</option>
               <option value="1000-5000">1000€ – 5000€</option>
@@ -91,20 +88,18 @@ export default function ContactoSitesIaPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            O que pretendes integrar?
-          </label>
-          <div className="grid sm:grid-cols-2 gap-2">
+          <label className="field-label mb-2.5">O que pretendes integrar?</label>
+          <div className="grid sm:grid-cols-2 gap-2.5">
             {NEEDS_OPTIONS.map((need) => (
               <label
                 key={need}
-                className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm cursor-pointer hover:border-gray-300"
+                className="flex items-center gap-2.5 rounded-xl border border-line px-3.5 py-2.5 text-sm text-body cursor-pointer transition-colors hover:border-accent-blue/40 has-[:checked]:border-accent-blue has-[:checked]:bg-accent-blue-50 has-[:checked]:text-ink"
               >
                 <input
                   type="checkbox"
                   checked={selectedNeeds.includes(need)}
                   onChange={() => toggleNeed(need)}
-                  className="rounded border-gray-300"
+                  className="rounded border-line text-brand focus:ring-accent-blue-50"
                 />
                 {need}
               </label>
@@ -114,29 +109,23 @@ export default function ContactoSitesIaPage() {
             name="needsFreeText"
             rows={2}
             placeholder="Ou descreve por palavras tuas o que precisas…"
-            className="mt-3 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+            className="input mt-3.5 resize-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Mensagem livre (opcional)
-          </label>
+          <label className="field-label">Mensagem livre (opcional)</label>
           <textarea
             name="message"
             rows={4}
             placeholder="Conta-nos mais sobre o teu negócio e objetivos…"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
+            className="input resize-none"
           />
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="w-full rounded-full bg-brand text-white font-semibold px-6 py-3 hover:bg-brand-light disabled:opacity-50 transition-colors"
-        >
+        <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-50">
           {submitting ? "A enviar…" : "Enviar pedido"}
         </button>
       </form>
@@ -157,13 +146,8 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      <input
-        name={name}
-        type={type}
-        required={required}
-        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm"
-      />
+      <label className="field-label">{label}</label>
+      <input name={name} type={type} required={required} className="input" />
     </div>
   );
 }

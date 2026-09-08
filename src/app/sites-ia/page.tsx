@@ -17,40 +17,35 @@ const steps = [
 export default function SitesIaPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 pb-12 text-center">
-        <p className="inline-block rounded-full bg-blue-50 text-brand text-xs font-semibold px-3 py-1 mb-6">
-          Sites com IA para Empresas
-        </p>
-        <h1 className="text-4xl font-bold tracking-tight text-brand max-w-2xl mx-auto">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-16 text-center">
+        <p className="eyebrow mx-auto mb-6">Sites com IA para Empresas</p>
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink max-w-2xl mx-auto leading-[1.1]">
           Construímos o teu site com inteligência artificial integrada
         </h1>
-        <p className="mt-4 text-lg text-gray-600 max-w-xl mx-auto">
+        <p className="mt-6 text-lg text-body max-w-xl mx-auto leading-relaxed">
           Chatbots, automações, geração de conteúdo e mais — tudo à medida
           do teu negócio.
         </p>
-        <Link
-          href="/sites-ia/contacto"
-          className="mt-8 inline-flex items-center justify-center rounded-full bg-brand text-white font-semibold px-6 py-3 hover:bg-brand-light transition-colors"
-        >
+        <Link href="/sites-ia/contacto" className="btn-primary mt-9">
           Pedir um briefing gratuito
         </Link>
       </section>
 
       {/* Integrações */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
-        <h2 className="text-2xl font-bold text-brand text-center mb-2">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
+        <h2 className="text-3xl font-bold text-ink text-center mb-2">
           O que integramos
         </h2>
-        <p className="text-center text-xs font-semibold uppercase tracking-wide text-gray-400 mb-10">
+        <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted mb-14">
           Exemplos — ajustamos consoante o teu negócio
         </p>
         <div className="grid sm:grid-cols-2 gap-6">
           {integrations.map((item) => (
-            <div key={item.title} className="rounded-xl border border-gray-200 p-6 flex gap-4">
-              <span className="text-2xl">{item.icon}</span>
+            <div key={item.title} className="card p-7 flex gap-5">
+              <span className="icon-badge text-lg">{item.icon}</span>
               <div>
-                <h3 className="font-semibold text-brand">{item.title}</h3>
-                <p className="mt-1 text-sm text-gray-600">{item.description}</p>
+                <h3 className="font-semibold text-ink">{item.title}</h3>
+                <p className="mt-1.5 text-sm text-body leading-relaxed">{item.description}</p>
               </div>
             </div>
           ))}
@@ -58,36 +53,31 @@ export default function SitesIaPage() {
       </section>
 
       {/* Como funciona */}
-      <section className="bg-gray-50 border-y border-gray-200">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
-          <h2 className="text-2xl font-bold text-brand text-center mb-10">
+      <section className="border-y border-line bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
+          <h2 className="text-3xl font-bold text-ink text-center mb-14">
             Como funciona
           </h2>
           <div className="grid sm:grid-cols-4 gap-6">
             {steps.map((step, i) => (
-              <div key={step.title} className="rounded-xl bg-white border border-gray-200 p-6">
-                <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-brand text-white text-sm font-bold mb-4">
-                  {i + 1}
-                </span>
-                <h3 className="font-semibold text-brand">{step.title}</h3>
-                <p className="mt-2 text-sm text-gray-600">{step.description}</p>
+              <div key={step.title} className="card p-7">
+                <span className="icon-badge text-base mb-5">{i + 1}</span>
+                <h3 className="font-semibold text-ink">{step.title}</h3>
+                <p className="mt-2 text-sm text-body leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center">
-        <h2 className="text-2xl font-bold text-brand">
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-24 text-center">
+        <h2 className="text-3xl font-bold text-ink">
           Vamos construir o teu site inteligente?
         </h2>
-        <p className="mt-3 text-gray-600">
+        <p className="mt-4 text-body">
           Conta-nos o teu negócio — respondemos dentro de 24h úteis.
         </p>
-        <Link
-          href="/sites-ia/contacto"
-          className="mt-6 inline-flex items-center justify-center rounded-full bg-brand text-white font-semibold px-6 py-3 hover:bg-brand-light transition-colors"
-        >
+        <Link href="/sites-ia/contacto" className="btn-primary mt-8">
           Pedir um briefing gratuito
         </Link>
       </section>

@@ -2,14 +2,14 @@
 
 /*
  * MVP: interface só em modo claro (a proposta de valor e as capturas de
- * ecrã partem de fundo branco). O body já define bg-white/text-gray-900
- * via Tailwind em src/app/layout.tsx — por isso não redefinimos aqui um
+ * ecrã partem de fundo branco). O body já define bg-surface/text-ink via
+ * Tailwind em src/app/layout.tsx — por isso não redefinimos aqui um
  * `body { background }` fora de uma @layer, que ganharia sempre à frente
  * das classes utilitárias do Tailwind na cascade.
  */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #16233d;
 }
 
 @theme inline {
@@ -18,10 +18,74 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Cores da marca NextIA Marketing (a partir do logótipo) */
+  /* ── Marca NextIA Marketing (a partir do logótipo) ──────────────── */
   --color-brand: #0b2545;
   --color-brand-dark: #071a33;
   --color-brand-light: #123a6b;
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #dde6f5;
   --color-accent-green: #1fa860;
+  --color-accent-green-50: #e8f8ef;
   --color-accent-blue: #2f7fe0;
+  --color-accent-blue-50: #eaf2fd;
+
+  /* ── Escala neutra com um toque de navy, em vez de cinza puro ───── */
+  --color-ink: #0f2038;
+  --color-body: #47536b;
+  --color-muted: #8291a8;
+  --color-line: #e4e9f2;
+  --color-surface: #f7f9fc;
+}
+
+@layer base {
+  ::selection {
+    background: var(--color-accent-blue);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Botões */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-brand text-white px-7 py-3.5 shadow-[0_1px_2px_rgba(11,37,69,0.15)] hover:bg-brand-dark hover:shadow-[0_8px_24px_-8px_rgba(11,37,69,0.5)] hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-white text-ink border border-line px-7 py-3.5 hover:border-brand/30 hover:-translate-y-0.5 active:translate-y-0 shadow-[0_1px_2px_rgba(15,32,56,0.04)];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 text-brand px-5 py-2.5 hover:bg-brand-50;
+  }
+
+  /* Cartão base */
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(15,32,56,0.04)];
+  }
+
+  /* Rótulo "eyebrow" acima de títulos de secção */
+  .eyebrow {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-brand-50 text-brand text-xs font-semibold px-3.5 py-1.5 tracking-wide;
+  }
+
+  /* Badge circular numerado / ícone gradiente */
+  .icon-badge {
+    @apply inline-flex items-center justify-center h-11 w-11 rounded-xl text-white font-bold shrink-0;
+    background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-green));
+  }
+
+  /* Formulários */
+  .field-label {
+    @apply block text-sm font-medium text-ink mb-1.5;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted transition-colors outline-none focus:border-accent-blue focus:ring-4 focus:ring-accent-blue-50;
+  }
+}
+
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(100deg, var(--color-brand), var(--color-accent-blue) 70%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
 }

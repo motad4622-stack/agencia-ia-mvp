@@ -25,44 +25,49 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-16 text-center">
-        <p className="inline-block rounded-full bg-blue-50 text-brand text-xs font-semibold px-3 py-1 mb-6">
-          NextIA Marketing
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-brand max-w-3xl mx-auto">
-          Usamos IA para dar vida às tuas fotos de alojamento e para
-          construir o teu próximo site inteligente
-        </h1>
-        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-          Dois serviços, uma só equipa: vídeos cinematográficos gerados por
-          IA para o teu anúncio, e sites com inteligência artificial
-          integrada para o teu negócio crescer.
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/videos"
-            className="rounded-full bg-brand text-white font-semibold px-6 py-3 hover:bg-brand-light transition-colors"
-          >
-            Quero um vídeo do meu alojamento
-          </Link>
-          <Link
-            href="/sites-ia"
-            className="rounded-full border border-gray-300 text-brand font-semibold px-6 py-3 hover:border-brand transition-colors"
-          >
-            Quero um site com IA
-          </Link>
+      <section className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-40 h-[560px] opacity-[0.16] blur-3xl"
+          style={{
+            background:
+              "radial-gradient(60% 60% at 30% 30%, var(--color-accent-blue), transparent 70%), radial-gradient(50% 50% at 75% 20%, var(--color-accent-green), transparent 70%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 pt-24 pb-20 text-center">
+          <p className="eyebrow mx-auto mb-7">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-green" />
+            NextIA Marketing
+          </p>
+          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-ink max-w-3xl mx-auto leading-[1.08]">
+            Usamos IA para dar vida às tuas fotos de alojamento e ao teu
+            próximo site inteligente
+          </h1>
+          <p className="mt-7 text-lg text-body max-w-2xl mx-auto leading-relaxed">
+            Dois serviços, uma só equipa: vídeos cinematográficos gerados por
+            IA para o teu anúncio, e sites com inteligência artificial
+            integrada para o teu negócio crescer.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/videos" className="btn-primary">
+              Quero um vídeo do meu alojamento
+            </Link>
+            <Link href="/sites-ia" className="btn-secondary">
+              Quero um site com IA
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Serviços */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-20">
-        <div className="grid sm:grid-cols-2 gap-8">
-          <div className="rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
-            <span className="text-3xl mb-4">🎬</span>
-            <h2 className="text-xl font-bold text-brand">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-24">
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="card p-9 flex flex-col hover:shadow-[0_20px_40px_-24px_rgba(15,32,56,0.18)] hover:-translate-y-1 transition-all duration-300">
+            <span className="icon-badge text-xl mb-6">🎬</span>
+            <h2 className="text-xl font-bold text-ink">
               Vídeos de IA para Alojamento
             </h2>
-            <p className="mt-3 text-gray-600 flex-1">
+            <p className="mt-3 text-body leading-relaxed flex-1">
               Marca uma reunião rápida, envia as fotos do teu Airbnb,
               alojamento local ou hotel, e recebe um vídeo walkthrough
               cinematográfico gerado por IA, pronto a publicar no teu
@@ -70,52 +75,59 @@ export default function HomePage() {
             </p>
             <Link
               href="/videos"
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-brand text-white font-semibold px-5 py-2.5 hover:bg-brand-light transition-colors"
+              className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-brand group"
             >
-              Ver como funciona →
+              Ver como funciona
+              <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 p-8 flex flex-col hover:shadow-lg transition-shadow">
-            <span className="text-3xl mb-4">🤖</span>
-            <h2 className="text-xl font-bold text-brand">
+          <div className="card p-9 flex flex-col hover:shadow-[0_20px_40px_-24px_rgba(15,32,56,0.18)] hover:-translate-y-1 transition-all duration-300">
+            <span className="icon-badge text-xl mb-6">🤖</span>
+            <h2 className="text-xl font-bold text-ink">
               Sites com IA para Empresas
             </h2>
-            <p className="mt-3 text-gray-600 flex-1">
+            <p className="mt-3 text-body leading-relaxed flex-1">
               Desenvolvemos o teu site com inteligência artificial
               integrada — chatbots, automações, geração de conteúdo e mais
               — à medida do teu negócio.
             </p>
             <Link
               href="/sites-ia"
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-brand text-white font-semibold px-5 py-2.5 hover:bg-brand-light transition-colors"
+              className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-brand group"
             >
-              Ver como funciona →
+              Ver como funciona
+              <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </div>
       </section>
 
       {/* Prova social */}
-      <section className="bg-gray-50 border-t border-gray-200">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
-          <p className="text-center text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+      <section className="border-t border-line bg-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-24">
+          <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted mb-3">
             Exemplo — testemunhos placeholder para o MVP
           </p>
-          <h2 className="text-center text-2xl font-bold text-brand mb-10">
+          <h2 className="text-center text-3xl font-bold text-ink mb-14">
             O que dizem os nossos clientes
           </h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {testimonials.map((t) => (
-              <div
-                key={t.author}
-                className="rounded-xl bg-white border border-gray-200 p-6"
-              >
-                <p className="text-gray-700 text-sm">“{t.quote}”</p>
-                <p className="mt-4 text-sm font-semibold text-brand">
-                  {t.author}
-                </p>
-                <p className="text-xs text-gray-500">{t.role}</p>
+              <div key={t.author} className="card p-7">
+                <span className="text-3xl text-accent-blue/30 font-serif leading-none">
+                  “
+                </span>
+                <p className="-mt-2 text-ink text-[15px] leading-relaxed">{t.quote}</p>
+                <div className="mt-6 flex items-center gap-3">
+                  <span className="icon-badge h-9 w-9 text-xs">
+                    {t.author.charAt(0)}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-ink">{t.author}</p>
+                    <p className="text-xs text-muted">{t.role}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

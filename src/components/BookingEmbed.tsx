@@ -19,7 +19,7 @@ export function BookingEmbed({ url }: { url: string }) {
     return (
       <>
         <div
-          className="calendly-inline-widget rounded-xl border border-gray-200"
+          className="calendly-inline-widget rounded-xl"
           data-url={url}
           style={{ minWidth: "280px", height: "700px" }}
         />
@@ -32,7 +32,7 @@ export function BookingEmbed({ url }: { url: string }) {
     <iframe
       src={url}
       title="Marcar reunião"
-      className="w-full rounded-xl border border-gray-200"
+      className="w-full rounded-xl"
       style={{ minWidth: "280px", height: "700px", border: 0 }}
     />
   );

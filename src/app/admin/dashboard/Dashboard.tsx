@@ -108,14 +108,14 @@ export function Dashboard() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-brand">Painel de administração</h1>
-        <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-brand">
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-3xl font-extrabold tracking-tight text-ink">Painel de administração</h1>
+        <button onClick={handleLogout} className="text-sm font-medium text-muted hover:text-brand transition-colors">
           Sair
         </button>
       </div>
 
-      <div className="flex gap-2 border-b border-gray-200 mb-6">
+      <div className="flex gap-2 border-b border-line mb-6">
         <TabButton active={tab === "meetings"} onClick={() => setTab("meetings")}>
           Pedidos de Reunião — Vídeos ({meetingRequests.length})
         </TabButton>
@@ -124,24 +124,24 @@ export function Dashboard() {
         </TabButton>
       </div>
 
-      {loading && <p className="text-gray-500 text-sm">A carregar…</p>}
+      {loading && <p className="text-muted text-sm">A carregar…</p>}
 
       {!loading && tab === "meetings" && (
-        <div className="overflow-x-auto">
+        <div className="card overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-gray-500 border-b border-gray-200">
-                <th className="py-2 pr-4">Estado</th>
-                <th className="py-2 pr-4">Cliente</th>
-                <th className="py-2 pr-4">Imóvel</th>
-                <th className="py-2 pr-4">Mensagem</th>
-                <th className="py-2 pr-4">Data</th>
+              <tr className="text-left text-muted border-b border-line">
+                <th className="py-3 pl-5 pr-4 font-medium">Estado</th>
+                <th className="py-3 pr-4 font-medium">Cliente</th>
+                <th className="py-3 pr-4 font-medium">Imóvel</th>
+                <th className="py-3 pr-4 font-medium">Mensagem</th>
+                <th className="py-3 pr-5 font-medium">Data</th>
               </tr>
             </thead>
             <tbody>
               {meetingRequests.map((mr) => (
-                <tr key={mr.id} className="border-b border-gray-100 align-top">
-                  <td className="py-3 pr-4">
+                <tr key={mr.id} className="border-b border-line last:border-0 align-top">
+                  <td className="py-4 pl-5 pr-4">
                     <select
                       value={mr.status}
                       onChange={(e) => handleMeetingStatus(mr.id, e.target.value)}
@@ -154,24 +154,24 @@ export function Dashboard() {
                       ))}
                     </select>
                   </td>
-                  <td className="py-3 pr-4">
-                    <div className="font-medium text-brand">{mr.clientName}</div>
-                    <div className="text-gray-500 text-xs">{mr.clientEmail}</div>
-                    {mr.clientPhone && <div className="text-gray-500 text-xs">{mr.clientPhone}</div>}
+                  <td className="py-4 pr-4">
+                    <div className="font-medium text-ink">{mr.clientName}</div>
+                    <div className="text-muted text-xs">{mr.clientEmail}</div>
+                    {mr.clientPhone && <div className="text-muted text-xs">{mr.clientPhone}</div>}
                   </td>
-                  <td className="py-3 pr-4">
-                    <div className="text-brand">{mr.propertyName}</div>
-                    <div className="text-gray-500 text-xs">{mr.propertyType}</div>
+                  <td className="py-4 pr-4">
+                    <div className="text-ink">{mr.propertyName}</div>
+                    <div className="text-muted text-xs">{mr.propertyType}</div>
                   </td>
-                  <td className="py-3 pr-4 text-gray-700 max-w-xs">
+                  <td className="py-4 pr-4 text-body max-w-xs">
                     <p className="line-clamp-2">{mr.message || "—"}</p>
                   </td>
-                  <td className="py-3 pr-4 text-gray-500">{formatDate(mr.createdAt)}</td>
+                  <td className="py-4 pr-5 text-muted">{formatDate(mr.createdAt)}</td>
                 </tr>
               ))}
               {meetingRequests.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-gray-400">
+                  <td colSpan={5} className="py-10 text-center text-muted">
                     Ainda não há pedidos de reunião.
                   </td>
                 </tr>
@@ -182,22 +182,22 @@ export function Dashboard() {
       )}
 
       {!loading && tab === "leads" && (
-        <div className="overflow-x-auto">
+        <div className="card overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-gray-500 border-b border-gray-200">
-                <th className="py-2 pr-4">Estado</th>
-                <th className="py-2 pr-4">Empresa</th>
-                <th className="py-2 pr-4">Contacto</th>
-                <th className="py-2 pr-4">Orçamento</th>
-                <th className="py-2 pr-4">Necessidades</th>
-                <th className="py-2 pr-4">Data</th>
+              <tr className="text-left text-muted border-b border-line">
+                <th className="py-3 pl-5 pr-4 font-medium">Estado</th>
+                <th className="py-3 pr-4 font-medium">Empresa</th>
+                <th className="py-3 pr-4 font-medium">Contacto</th>
+                <th className="py-3 pr-4 font-medium">Orçamento</th>
+                <th className="py-3 pr-4 font-medium">Necessidades</th>
+                <th className="py-3 pr-5 font-medium">Data</th>
               </tr>
             </thead>
             <tbody>
               {leads.map((lead) => (
-                <tr key={lead.id} className="border-b border-gray-100 align-top">
-                  <td className="py-3 pr-4">
+                <tr key={lead.id} className="border-b border-line last:border-0 align-top">
+                  <td className="py-4 pl-5 pr-4">
                     <select
                       value={lead.status}
                       onChange={(e) => handleLeadStatus(lead.id, e.target.value)}
@@ -210,30 +210,30 @@ export function Dashboard() {
                       ))}
                     </select>
                   </td>
-                  <td className="py-3 pr-4">
-                    <div className="font-medium text-brand">{lead.companyName}</div>
-                    <div className="text-gray-500 text-xs">{lead.businessType}</div>
+                  <td className="py-4 pr-4">
+                    <div className="font-medium text-ink">{lead.companyName}</div>
+                    <div className="text-muted text-xs">{lead.businessType}</div>
                   </td>
-                  <td className="py-3 pr-4">
-                    <div className="text-brand">{lead.clientName}</div>
-                    <div className="text-gray-500 text-xs">{lead.clientEmail}</div>
+                  <td className="py-4 pr-4">
+                    <div className="text-ink">{lead.clientName}</div>
+                    <div className="text-muted text-xs">{lead.clientEmail}</div>
                     {lead.clientPhone && (
-                      <div className="text-gray-500 text-xs">{lead.clientPhone}</div>
+                      <div className="text-muted text-xs">{lead.clientPhone}</div>
                     )}
                   </td>
-                  <td className="py-3 pr-4 text-gray-700">{lead.budgetRange || "—"}</td>
-                  <td className="py-3 pr-4 text-gray-700 max-w-xs">
+                  <td className="py-4 pr-4 text-body">{lead.budgetRange || "—"}</td>
+                  <td className="py-4 pr-4 text-body max-w-xs">
                     <p className="line-clamp-2">{lead.needs}</p>
                     {lead.message && (
-                      <p className="text-gray-500 text-xs mt-1 line-clamp-2">{lead.message}</p>
+                      <p className="text-muted text-xs mt-1 line-clamp-2">{lead.message}</p>
                     )}
                   </td>
-                  <td className="py-3 pr-4 text-gray-500">{formatDate(lead.createdAt)}</td>
+                  <td className="py-4 pr-5 text-muted">{formatDate(lead.createdAt)}</td>
                 </tr>
               ))}
               {leads.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-gray-400">
+                  <td colSpan={6} className="py-10 text-center text-muted">
                     Ainda não há leads de sites com IA.
                   </td>
                 </tr>
@@ -258,8 +258,8 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
-        active ? "border-brand text-brand" : "border-transparent text-gray-500 hover:text-gray-700"
+      className={`px-4 py-2.5 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+        active ? "border-brand text-brand" : "border-transparent text-muted hover:text-ink"
       }`}
     >
       {children}
