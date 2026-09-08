@@ -6,8 +6,12 @@ export const BRAND_NAME = "NextIA Marketing";
 // o pagamento é combinado na reunião, não no site).
 export const VIDEO_PRICE_EUR = 49;
 
-/** Link do Calendly/Cal.com para marcar reunião. Vazio -> usa o formulário de fallback. */
-export function getCalendlyUrl(): string | null {
-  const url = process.env.NEXT_PUBLIC_CALENDLY_URL;
+/**
+ * Link da agenda de marcação — Google Calendar "Appointment schedule"
+ * (calendar.app.google/...) ou Calendly (calendly.com/...). Vazio -> usa
+ * o formulário de fallback em /videos/marcar-reuniao.
+ */
+export function getBookingUrl(): string | null {
+  const url = process.env.NEXT_PUBLIC_BOOKING_URL;
   return url && url.trim().length > 0 ? url.trim() : null;
 }

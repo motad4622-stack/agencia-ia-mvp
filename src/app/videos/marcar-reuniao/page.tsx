@@ -1,9 +1,9 @@
-import { getCalendlyUrl } from "@/lib/brand";
-import { CalendlyEmbed } from "@/components/CalendlyEmbed";
+import { getBookingUrl } from "@/lib/brand";
+import { BookingEmbed } from "@/components/BookingEmbed";
 import { MeetingRequestForm } from "@/components/MeetingRequestForm";
 
 export default function MarcarReuniaoPage() {
-  const calendlyUrl = getCalendlyUrl();
+  const bookingUrl = getBookingUrl();
 
   return (
     <section className="mx-auto max-w-2xl px-4 sm:px-6 py-16 w-full">
@@ -14,8 +14,8 @@ export default function MarcarReuniaoPage() {
       </p>
 
       <div className="mt-8">
-        {calendlyUrl ? (
-          <CalendlyEmbed url={calendlyUrl} />
+        {bookingUrl ? (
+          <BookingEmbed url={bookingUrl} />
         ) : (
           <>
             <p className="mb-6 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3">

@@ -9,7 +9,8 @@ Site de uma agência com dois serviços:
    briefing, com email automático de confirmação.
 
 Stack: Next.js (App Router) + TypeScript + Tailwind CSS + Prisma/SQLite +
-Resend (emails) + Calendly/Cal.com embutido (ou formulário de fallback).
+Resend (emails) + agenda do Google Calendar/Calendly embutida (ou
+formulário de fallback).
 
 **Tudo corre em modo mock por omissão** — não precisas de nenhuma chave de
 API real para testar o site de ponta a ponta.
@@ -38,7 +39,7 @@ O vídeo em si **não é gerado no site**: a IA para o vídeo é usada pela
 equipa manualmente depois da reunião. O site trata só de captar o pedido.
 
 1. Vai a **`/videos/marcar-reuniao`**.
-2. Sem `NEXT_PUBLIC_CALENDLY_URL` definida no `.env` (default), vês um
+2. Sem `NEXT_PUBLIC_BOOKING_URL` definida no `.env` (default), vês um
    **formulário de fallback**: nome, email, telefone, imóvel, tipo de
    alojamento e mensagem.
 3. Preenche e clica em **"Pedir reunião"**.
@@ -47,17 +48,25 @@ equipa manualmente depois da reunião. O site trata só de captar o pedido.
    no admin. O email de confirmação é escrito em `logs/emails.log` (ou
    enviado a sério, se `RESEND_API_KEY` estiver definida).
 
-### Ligar uma agenda real (Calendly ou Cal.com)
+### Ligar uma agenda real (Google Calendar ou Calendly)
 
-Define no `.env`:
+A forma recomendada é uma **"Appointment schedule"** do Google Calendar
+(equivalente nativo ao Calendly, sem conta de terceiros):
+
+1. Em [calendar.google.com](https://calendar.google.com): **Criar** →
+   **Agenda de marcações** → define duração/disponibilidade → **Guardar**.
+2. Copia o link de partilha (ex.: `https://calendar.app.google/xxxxx`).
+3. Define no `.env`:
 
 ```
-NEXT_PUBLIC_CALENDLY_URL="https://calendly.com/o-teu-utilizador/reuniao"
+NEXT_PUBLIC_BOOKING_URL="https://calendar.app.google/xxxxx"
 ```
 
 Reinicia o `npm run dev` — a página `/videos/marcar-reuniao` passa a
-mostrar o calendário embutido em vez do formulário de fallback. (Funciona
-também com um link de embed do Cal.com, apesar do nome da variável.)
+mostrar o calendário embutido em vez do formulário de fallback. Também
+aceita um link do Calendly (`https://calendly.com/...`) na mesma
+variável — o componente [`BookingEmbed`](src/components/BookingEmbed.tsx)
+deteta automaticamente qual dos dois é, pelo próprio URL.
 
 ---
 
@@ -94,7 +103,7 @@ de ser alterado para a app passar a usar serviços reais:
 
 | O quê | Variável | Onde muda o comportamento |
 |---|---|---|
-| Agenda de reuniões | `NEXT_PUBLIC_CALENDLY_URL` | [`src/app/videos/marcar-reuniao/page.tsx`](src/app/videos/marcar-reuniao/page.tsx), [`src/components/CalendlyEmbed.tsx`](src/components/CalendlyEmbed.tsx) |
+| Agenda de reuniões | `NEXT_PUBLIC_BOOKING_URL` | [`src/app/videos/marcar-reuniao/page.tsx`](src/app/videos/marcar-reuniao/page.tsx), [`src/components/BookingEmbed.tsx`](src/components/BookingEmbed.tsx) |
 | Emails | `RESEND_API_KEY` + `EMAIL_FROM` | [`src/lib/email.ts`](src/lib/email.ts) |
 | Base de dados de produção | trocar `provider = "sqlite"` para `"postgresql"` em `prisma/schema.prisma` e apontar `DATABASE_URL` para o Postgres/Supabase | [`prisma/schema.prisma`](prisma/schema.prisma) |
 | Logótipo real | troca o componente `Logo` por um `<Image src="/logo.png" .../>` | [`src/components/Logo.tsx`](src/components/Logo.tsx) |
@@ -109,14 +118,14 @@ O preço de referência do vídeo (49€ por omissão) é uma constante única e
 ```
 prisma/schema.prisma          Modelos MeetingRequest e WebsiteLead
 src/lib/
-  brand.ts                    Nome da marca, preço de referência, link do Calendly
+  brand.ts                    Nome da marca, preço de referência, link da agenda
   email.ts                    3 templates de email + modo mock/log
   auth.ts                     Autenticação simples do admin (password única)
   prisma.ts                   Cliente Prisma singleton
 src/components/
   Logo.tsx                    Logótipo (SVG placeholder — trocar pelo ficheiro real)
   Nav.tsx / Footer.tsx        Navegação e rodapé
-  CalendlyEmbed.tsx           Agenda embutida (Calendly/Cal.com)
+  BookingEmbed.tsx             Agenda embutida (Google Calendar ou Calendly)
   MeetingRequestForm.tsx      Formulário de fallback (sem agenda ligada)
 src/app/
   page.tsx                    Landing page
