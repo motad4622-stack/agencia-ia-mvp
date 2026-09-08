@@ -8,13 +8,15 @@ export default async function AdminLoginPage() {
   }
 
   return (
-    <section className="mx-auto max-w-sm px-4 sm:px-6 py-28 w-full">
-      <div className="card p-8 text-center">
-        <h1 className="text-2xl font-bold text-ink">Admin</h1>
-        <p className="mt-2 text-sm text-muted">
-          Acesso restrito à equipa da NextIA Marketing.
-        </p>
-        <AdminLoginForm />
+    <section className="bg-surface py-24">
+      <div className="container-page max-w-sm!">
+        <div className="card p-8 text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-ink">Área da equipa</h1>
+          <p className="mt-2 text-sm text-muted">
+            Acesso restrito à equipa da NextIA Marketing.
+          </p>
+          <AdminLoginForm />
+        </div>
       </div>
     </section>
   );

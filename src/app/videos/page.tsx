@@ -1,101 +1,137 @@
 import Link from "next/link";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Reveal } from "@/components/Reveal";
+import { VideoFrame } from "@/components/Mockups";
 import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
 const steps = [
   {
+    n: "01",
     title: "Marcas uma reunião",
-    description: "Uma chamada rápida para perceber o teu imóvel e o que precisas.",
+    text: "Trinta minutos para percebermos o imóvel, o público e onde o vídeo vai ser usado.",
   },
   {
-    title: "Partilhas as fotos",
-    description: "Envias-nos as fotos do imóvel — quanto melhor a luz, melhor o resultado.",
+    n: "02",
+    title: "Partilhas as fotografias",
+    text: "As que já usas no anúncio servem. Quanto melhor a luz, melhor o resultado.",
   },
   {
-    title: "A nossa equipa cria o vídeo",
-    description: "Produzimos o vídeo walkthrough cinematográfico com o apoio de IA.",
+    n: "03",
+    title: "Criamos o vídeo",
+    text: "A nossa equipa trata da produção com apoio de IA — sem filmagens nem deslocações.",
   },
   {
-    title: "Recebes o vídeo pronto",
-    description: "Entregamos o vídeo pronto a publicar no teu anúncio de Airbnb ou site.",
+    n: "04",
+    title: "Recebes pronto a publicar",
+    text: "No formato que precisas, para o anúncio, o teu site ou as redes sociais.",
   },
 ];
 
-const beforeAfter = [
-  { label: "Fotos soltas do anúncio" },
-  { label: "Vídeo walkthrough cinematográfico" },
+const included = [
+  "Vídeo walkthrough a partir das tuas fotografias",
+  "Formato pensado para anúncio e para redes sociais",
+  "Acompanhamento direto com a equipa, sem intermediários",
 ];
 
 export default function VideosPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-16 text-center">
-        <p className="eyebrow mx-auto mb-6">Vídeos de IA para Alojamento</p>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink max-w-2xl mx-auto leading-[1.1]">
-          Transforma as fotos do teu alojamento num vídeo cinematográfico,
-          sem filmar nada
-        </h1>
-        <p className="mt-6 text-lg text-body max-w-xl mx-auto leading-relaxed">
-          Ideal para anfitriões de Airbnb, alojamento local e hotéis que
-          querem destacar-se com um anúncio mais profissional. Marca uma
-          reunião rápida e tratamos do resto.
-        </p>
-        <Link href="/videos/marcar-reuniao" className="btn-primary mt-9">
-          Marcar reunião
-        </Link>
+      {/* Hero */}
+      <section className="border-b border-line bg-white">
+        <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-16 lg:py-20">
+          <div>
+            <p className="eyebrow">Vídeos de IA para alojamento</p>
+            <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-[3rem]">
+              Mostra o espaço antes de o cliente abrir o anúncio.
+            </h1>
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-body">
+              Transformamos as fotografias do teu Airbnb, alojamento local ou
+              hotel num vídeo com movimento e ritmo — sem filmar nada, sem
+              equipamento e sem marcar sessões fotográficas.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link href="/videos/marcar-reuniao" className="btn-primary">
+                Marcar reunião
+              </Link>
+              <Link href="/#exemplos" className="btn-secondary">
+                Ver exemplos
+              </Link>
+            </div>
+          </div>
+          <VideoFrame duration="0:24" />
+        </div>
       </section>
 
       {/* Como funciona */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
-        <h2 className="text-3xl font-bold text-ink text-center mb-14">
-          Como funciona
-        </h2>
-        <div className="grid sm:grid-cols-4 gap-6">
-          {steps.map((step, i) => (
-            <div key={step.title} className="card p-7">
-              <span className="icon-badge text-base mb-5">{i + 1}</span>
-              <h3 className="font-semibold text-ink">{step.title}</h3>
-              <p className="mt-2 text-sm text-body leading-relaxed">{step.description}</p>
+      <section className="bg-white py-20 sm:py-24">
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Como funciona"
+              title="Quatro passos, sem complicação"
+              description="Do primeiro contacto ao vídeo pronto a publicar."
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {steps.map((step) => (
+                <div key={step.n} className="card card-hover h-full p-6">
+                  <p className="text-sm font-bold tabular-nums text-blue">{step.n}</p>
+                  <h3 className="mt-3 font-semibold text-ink">{step.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-body">{step.text}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 
-      {/* Antes / depois */}
-      <section className="border-y border-line bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
-          <h2 className="text-3xl font-bold text-ink text-center mb-2">
-            Antes / depois
-          </h2>
-          <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted mb-12">
-            Exemplo — substituir por casos reais quando existirem
-          </p>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {beforeAfter.map((item) => (
-              <div
-                key={item.label}
-                className="aspect-video rounded-2xl bg-brand-50 border border-line flex items-center justify-center text-brand text-sm font-medium"
-              >
-                {item.label}
+      {/* Preço + o que inclui */}
+      <section className="border-t border-line bg-surface py-20 sm:py-24">
+        <div className="container-page">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Investimento"
+                title={`A partir de ${VIDEO_PRICE_EUR}€ por vídeo`}
+                description="É o ponto de partida para um imóvel. O valor final depende do número de imóveis, do detalhe e dos formatos que precisas — combinamos isso na reunião, sem surpresas."
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="card p-7 sm:p-9">
+                <p className="text-[13px] font-semibold uppercase tracking-wide text-muted">
+                  O que está incluído
+                </p>
+                <ul className="mt-5 space-y-4">
+                  {included.map((item) => (
+                    <li key={item} className="flex gap-3 text-[15px] text-body">
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        className="mt-0.5 shrink-0 text-green"
+                        aria-hidden
+                      >
+                        <circle cx="9" cy="9" r="9" fill="currentColor" opacity="0.12" />
+                        <path
+                          d="M5.5 9.2l2.3 2.3 4.7-4.7"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          fill="none"
+                        />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/videos/marcar-reuniao" className="btn-primary mt-8 w-full">
+                  Marcar reunião
+                </Link>
               </div>
-            ))}
+            </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* Preço + CTA final */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-24 text-center">
-        <div className="card p-12">
-          <h2 className="text-xl font-bold text-ink">Vídeo Walkthrough</h2>
-          <p className="mt-3 text-5xl font-extrabold text-ink">
-            desde {VIDEO_PRICE_EUR}€ <span className="text-lg font-normal text-muted">/ vídeo</span>
-          </p>
-          <p className="mt-5 text-sm text-body">
-            Preço de referência de lançamento. Combinamos os detalhes e o
-            valor final na reunião, consoante o imóvel.
-          </p>
-          <Link href="/videos/marcar-reuniao" className="btn-primary mt-8">
-            Marcar reunião
-          </Link>
         </div>
       </section>
     </>

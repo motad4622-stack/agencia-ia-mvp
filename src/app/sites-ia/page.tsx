@@ -1,85 +1,118 @@
 import Link from "next/link";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Reveal } from "@/components/Reveal";
+import { BrowserFrame } from "@/components/Mockups";
 
 const integrations = [
-  { icon: "💬", title: "Chatbot de apoio ao cliente", description: "Responde a perguntas frequentes 24/7, direto no teu site." },
-  { icon: "✉️", title: "Automação de emails", description: "Sequências automáticas de boas-vindas, follow-up e retenção." },
-  { icon: "📝", title: "Geração automática de conteúdo", description: "Textos, descrições de produto e imagens gerados por IA." },
-  { icon: "🎯", title: "Motores de recomendação", description: "Sugestões personalizadas de produtos ou serviços para cada visitante." },
+  {
+    title: "Chatbot de apoio ao cliente",
+    description:
+      "Treinado com a informação do teu negócio, responde às perguntas de sempre a qualquer hora e encaminha o resto para ti.",
+  },
+  {
+    title: "Automação de emails",
+    description:
+      "Confirmações, follow-ups e lembretes enviados sozinhos, com o teu tom e no momento certo.",
+  },
+  {
+    title: "Geração de conteúdo",
+    description:
+      "Textos, descrições e imagens produzidos com IA para manteres o site vivo sem parar o teu dia.",
+  },
+  {
+    title: "Recomendações personalizadas",
+    description:
+      "Sugestões de produtos ou serviços ajustadas a cada visitante, a partir do que ele procura.",
+  },
 ];
 
 const steps = [
-  { title: "Briefing", description: "Preenches um formulário a contar-nos o teu negócio e o que precisas." },
-  { title: "Proposta", description: "Analisamos o pedido e enviamos uma proposta à medida." },
-  { title: "Desenvolvimento", description: "Construímos o site com as integrações de IA acordadas." },
-  { title: "Lançamento", description: "Publicamos o site e ficamos disponíveis para o que precisares." },
+  { n: "01", title: "Falamos sobre o negócio", text: "O que fazes, para quem, e o que te tira tempo." },
+  { n: "02", title: "Enviamos uma proposta", text: "Âmbito, prazos e valor, por escrito e sem letra pequena." },
+  { n: "03", title: "Construímos o site", text: "Design, conteúdo e as integrações de IA acordadas." },
+  { n: "04", title: "Publicamos e melhoramos", text: "Ficamos disponíveis depois de estar no ar." },
 ];
 
 export default function SitesIaPage() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-16 text-center">
-        <p className="eyebrow mx-auto mb-6">Sites com IA para Empresas</p>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink max-w-2xl mx-auto leading-[1.1]">
-          Construímos o teu site com inteligência artificial integrada
-        </h1>
-        <p className="mt-6 text-lg text-body max-w-xl mx-auto leading-relaxed">
-          Chatbots, automações, geração de conteúdo e mais — tudo à medida
-          do teu negócio.
-        </p>
-        <Link href="/sites-ia/contacto" className="btn-primary mt-9">
-          Pedir um briefing gratuito
-        </Link>
+      {/* Hero */}
+      <section className="border-b border-line bg-white">
+        <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-16 lg:py-20">
+          <div>
+            <p className="eyebrow">Sites com IA para empresas</p>
+            <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-[3rem]">
+              Um site que trabalha, mesmo quando tu não estás.
+            </h1>
+            <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-body">
+              Construímos o teu site com inteligência artificial integrada:
+              chatbots que respondem, automações que poupam horas e conteúdo
+              que se mantém atualizado.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link href="/sites-ia/contacto" className="btn-primary">
+                Pedir um briefing
+              </Link>
+              <Link href="/#exemplos" className="btn-secondary">
+                Ver exemplos
+              </Link>
+            </div>
+          </div>
+          <BrowserFrame withChat />
+        </div>
       </section>
 
       {/* Integrações */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16">
-        <h2 className="text-3xl font-bold text-ink text-center mb-2">
-          O que integramos
-        </h2>
-        <p className="text-center text-xs font-semibold uppercase tracking-wider text-muted mb-14">
-          Exemplos — ajustamos consoante o teu negócio
-        </p>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {integrations.map((item) => (
-            <div key={item.title} className="card p-7 flex gap-5">
-              <span className="icon-badge text-lg">{item.icon}</span>
-              <div>
-                <h3 className="font-semibold text-ink">{item.title}</h3>
-                <p className="mt-1.5 text-sm text-body leading-relaxed">{item.description}</p>
-              </div>
+      <section className="bg-white py-20 sm:py-24">
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              eyebrow="O que integramos"
+              title="IA onde faz diferença, não onde dá nas vistas"
+              description="Escolhemos as integrações a partir do que te ocupa mais tempo. Estas são as mais pedidas."
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              {integrations.map((item) => (
+                <div key={item.title} className="card card-hover h-full p-7">
+                  <h3 className="font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-body">{item.description}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 
       {/* Como funciona */}
-      <section className="border-y border-line bg-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
-          <h2 className="text-3xl font-bold text-ink text-center mb-14">
-            Como funciona
-          </h2>
-          <div className="grid sm:grid-cols-4 gap-6">
-            {steps.map((step, i) => (
-              <div key={step.title} className="card p-7">
-                <span className="icon-badge text-base mb-5">{i + 1}</span>
-                <h3 className="font-semibold text-ink">{step.title}</h3>
-                <p className="mt-2 text-sm text-body leading-relaxed">{step.description}</p>
-              </div>
-            ))}
+      <section className="border-t border-line bg-surface py-20 sm:py-24">
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Como funciona"
+              title="Do briefing ao site publicado"
+              description="Sabes sempre em que ponto está o projeto e o que se segue."
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {steps.map((step) => (
+                <div key={step.n} className="card card-hover h-full p-6">
+                  <p className="text-sm font-bold tabular-nums text-blue">{step.n}</p>
+                  <h3 className="mt-3 font-semibold text-ink">{step.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-body">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <div className="mt-14 text-center">
+            <Link href="/sites-ia/contacto" className="btn-primary">
+              Pedir um briefing
+            </Link>
           </div>
         </div>
-      </section>
-
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-24 text-center">
-        <h2 className="text-3xl font-bold text-ink">
-          Vamos construir o teu site inteligente?
-        </h2>
-        <p className="mt-4 text-body">
-          Conta-nos o teu negócio — respondemos dentro de 24h úteis.
-        </p>
-        <Link href="/sites-ia/contacto" className="btn-primary mt-8">
-          Pedir um briefing gratuito
-        </Link>
       </section>
     </>
   );

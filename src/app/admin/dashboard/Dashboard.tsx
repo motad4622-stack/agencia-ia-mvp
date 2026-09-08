@@ -109,8 +109,10 @@ export function Dashboard() {
   return (
     <div>
       <div className="flex items-center justify-between mb-10">
-        <h1 className="text-3xl font-extrabold tracking-tight text-ink">Painel de administração</h1>
-        <button onClick={handleLogout} className="text-sm font-medium text-muted hover:text-brand transition-colors">
+        <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          Painel de administração
+        </h1>
+        <button onClick={handleLogout} className="text-sm font-medium text-muted transition-colors hover:text-navy">
           Sair
         </button>
       </div>
@@ -259,7 +261,7 @@ function TabButton({
     <button
       onClick={onClick}
       className={`px-4 py-2.5 text-sm font-semibold border-b-2 -mb-px transition-colors ${
-        active ? "border-brand text-brand" : "border-transparent text-muted hover:text-ink"
+        active ? "border-navy text-navy" : "border-transparent text-muted hover:text-ink"
       }`}
     >
       {children}

@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 /*
- * MVP: interface só em modo claro (a proposta de valor e as capturas de
- * ecrã partem de fundo branco). O body já define bg-surface/text-ink via
- * Tailwind em src/app/layout.tsx — por isso não redefinimos aqui um
- * `body { background }` fora de uma @layer, que ganharia sempre à frente
- * das classes utilitárias do Tailwind na cascade.
+ * Sistema visual da NextIA Marketing.
+ *
+ * Princípios:
+ * - raios moderados (8 / 12 / 16px), nunca cápsulas gigantes;
+ * - sombras muito subtis, bordas finas a fazer o trabalho;
+ * - navy como cor estrutural, verde só como acento;
+ * - superfícies alternadas (branco / off-white / navy) a dar ritmo.
  */
 :root {
   --background: #ffffff;
@@ -18,74 +20,111 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* ── Marca NextIA Marketing (a partir do logótipo) ──────────────── */
-  --color-brand: #0b2545;
-  --color-brand-dark: #071a33;
-  --color-brand-light: #123a6b;
-  --color-brand-50: #eef3fb;
-  --color-brand-100: #dde6f5;
-  --color-accent-green: #1fa860;
-  --color-accent-green-50: #e8f8ef;
-  --color-accent-blue: #2f7fe0;
-  --color-accent-blue-50: #eaf2fd;
+  /* ── Marca (a partir do logótipo) ────────────────────────────────── */
+  --color-navy: #0b2545;
+  --color-navy-800: #10305a;
+  --color-navy-700: #17406f;
+  --color-blue: #2f7fe0;
+  --color-blue-600: #2468bd;
+  --color-blue-50: #eef4fd;
+  --color-green: #1fa860;
+  --color-green-50: #e9f7ef;
 
-  /* ── Escala neutra com um toque de navy, em vez de cinza puro ───── */
+  /* ── Neutros com um toque de navy ───────────────────────────────── */
   --color-ink: #0f2038;
-  --color-body: #47536b;
-  --color-muted: #8291a8;
-  --color-line: #e4e9f2;
-  --color-surface: #f7f9fc;
+  --color-body: #4b5769;
+  --color-muted: #7d8899;
+  --color-line: #e3e8ef;
+  --color-line-strong: #cfd7e3;
+  --color-surface: #f6f8fb;
+
+  /* ── Raios ──────────────────────────────────────────────────────── */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 }
 
 @layer base {
   ::selection {
-    background: var(--color-accent-blue);
+    background: var(--color-navy);
     color: #fff;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    text-rendering: optimizeLegibility;
   }
 }
 
 @layer components {
-  /* Botões */
+  /* Largura de conteúdo consistente em todo o site */
+  .container-page {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+
+  /* ── Botões ───────────────────────────────────────────────────── */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-brand text-white px-7 py-3.5 shadow-[0_1px_2px_rgba(11,37,69,0.15)] hover:bg-brand-dark hover:shadow-[0_8px_24px_-8px_rgba(11,37,69,0.5)] hover:-translate-y-0.5 active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-navy px-6 py-3 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-navy-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-white text-ink border border-line px-7 py-3.5 hover:border-brand/30 hover:-translate-y-0.5 active:translate-y-0 shadow-[0_1px_2px_rgba(15,32,56,0.04)];
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-line-strong bg-white px-6 py-3 text-[15px] font-semibold text-ink transition-colors duration-200 hover:border-navy hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue;
   }
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 text-brand px-5 py-2.5 hover:bg-brand-50;
+  .btn-on-navy {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3 text-[15px] font-semibold text-navy transition-colors duration-200 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  }
+  .btn-ghost-on-navy {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/25 px-6 py-3 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white/10;
   }
 
-  /* Cartão base */
+  /* ── Superfícies ──────────────────────────────────────────────── */
   .card {
-    @apply rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(15,32,56,0.04)];
+    @apply rounded-xl border border-line bg-white;
+  }
+  .card-hover {
+    @apply transition duration-200 hover:border-line-strong hover:shadow-[0_6px_24px_-12px_rgba(15,32,56,0.25)];
   }
 
-  /* Rótulo "eyebrow" acima de títulos de secção */
+  /* ── Rótulo de secção ─────────────────────────────────────────── */
   .eyebrow {
-    @apply inline-flex items-center gap-1.5 rounded-full bg-brand-50 text-brand text-xs font-semibold px-3.5 py-1.5 tracking-wide;
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-blue;
+  }
+  .eyebrow-on-navy {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-green;
   }
 
-  /* Badge circular numerado / ícone gradiente */
-  .icon-badge {
-    @apply inline-flex items-center justify-center h-11 w-11 rounded-xl text-white font-bold shrink-0;
-    background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-green));
-  }
-
-  /* Formulários */
+  /* ── Formulários ──────────────────────────────────────────────── */
   .field-label {
-    @apply block text-sm font-medium text-ink mb-1.5;
+    @apply mb-1.5 block text-[13px] font-semibold uppercase tracking-wide text-muted;
   }
   .input {
-    @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted transition-colors outline-none focus:border-accent-blue focus:ring-4 focus:ring-accent-blue-50;
+    @apply w-full rounded-md border border-line-strong bg-white px-3.5 py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-blue focus:ring-2 focus:ring-blue/15;
   }
 }
 
 @layer utilities {
-  .text-gradient-brand {
-    background: linear-gradient(100deg, var(--color-brand), var(--color-accent-blue) 70%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  /* Revelação subtil ao entrar no ecrã (ver components/Reveal.tsx).
+     O estado inicial é aplicado por JS, para quem tem JS desligado ver
+     o conteúdo normalmente. */
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.5s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-init,
+    .reveal-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   }
 }

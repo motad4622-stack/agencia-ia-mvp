@@ -6,29 +6,33 @@ export default function MarcarReuniaoPage() {
   const bookingUrl = getBookingUrl();
 
   return (
-    <section className="mx-auto max-w-2xl px-4 sm:px-6 py-20 w-full">
-      <div className="text-center mb-10">
-        <p className="eyebrow mx-auto mb-6">Vídeos de IA para Alojamento</p>
-        <h1 className="text-4xl font-extrabold tracking-tight text-ink">Marcar reunião</h1>
-        <p className="mt-3 text-body max-w-md mx-auto">
-          Conta-nos sobre o teu imóvel — combinamos os próximos passos numa
-          chamada rápida.
-        </p>
-      </div>
-
-      {bookingUrl ? (
-        <div className="card p-2 sm:p-3">
-          <BookingEmbed url={bookingUrl} />
-        </div>
-      ) : (
-        <div className="card p-8 sm:p-10">
-          <p className="mb-7 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
-            A agenda online ainda não está ligada — preenche o formulário
-            abaixo e entramos em contacto para marcar o melhor horário.
+    <section className="bg-white py-16 sm:py-20">
+      <div className="container-page max-w-3xl!">
+        <div className="mb-10 text-center">
+          <p className="eyebrow">Vídeos de IA para alojamento</p>
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            Marcar reunião
+          </h1>
+          <p className="mx-auto mt-4 max-w-md text-[17px] leading-relaxed text-body">
+            Trinta minutos para percebermos o teu imóvel e combinarmos os
+            próximos passos. Sem compromisso.
           </p>
-          <MeetingRequestForm />
         </div>
-      )}
+
+        {bookingUrl ? (
+          <div className="card overflow-hidden p-2 sm:p-3">
+            <BookingEmbed url={bookingUrl} />
+          </div>
+        ) : (
+          <div className="card p-7 sm:p-9">
+            <p className="mb-7 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+              A agenda online ainda não está ligada — preenche o formulário e
+              entramos em contacto para marcar o melhor horário.
+            </p>
+            <MeetingRequestForm />
+          </div>
+        )}
+      </div>
     </section>
   );
 }

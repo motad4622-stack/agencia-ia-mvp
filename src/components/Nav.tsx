@@ -1,28 +1,97 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 
+const LINKS = [
+  { href: "/#servicos", label: "Serviços" },
+  { href: "/#como-funciona", label: "Como funciona" },
+  { href: "/#exemplos", label: "Exemplos" },
+  { href: "/#faq", label: "FAQ" },
+];
+
 export function Nav() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="border-b border-line bg-white/85 backdrop-blur-md sticky top-0 z-40">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3.5 flex items-center justify-between">
-        <Link href="/" className="flex items-center shrink-0">
+    <header className="sticky top-0 z-50 border-b border-line bg-white">
+      <div className="container-page flex h-16 items-center justify-between gap-6">
+        <Link href="/" className="shrink-0" aria-label="NextIA Marketing — início">
           <Logo compact />
         </Link>
-        <nav className="hidden sm:flex items-center gap-8 text-sm font-medium text-body">
-          <Link href="/videos" className="hover:text-brand transition-colors">
-            Vídeos de Alojamento
-          </Link>
-          <Link href="/sites-ia" className="hover:text-brand transition-colors">
-            Sites com IA
-          </Link>
-          <Link href="/admin" className="hover:text-brand transition-colors">
-            Admin
-          </Link>
+
+        <nav className="hidden items-center gap-8 md:flex">
+          {LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-[15px] font-medium text-body transition-colors hover:text-navy"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
-        <Link href="/videos/marcar-reuniao" className="btn-primary px-5! py-2.5! text-sm">
-          Marcar reunião
-        </Link>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/videos/marcar-reuniao"
+            className="hidden btn-primary px-5! py-2.5! text-sm! sm:inline-flex"
+          >
+            Marcar reunião
+          </Link>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-line-strong text-navy md:hidden"
+          >
+            <span className="sr-only">Menu</span>
+            <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true">
+              {open ? (
+                <path
+                  d="M1 1l16 12M17 1L1 13"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              ) : (
+                <path
+                  d="M0 1h18M0 7h18M0 13h18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {open && (
+        <div className="border-t border-line bg-white md:hidden">
+          <nav className="container-page flex flex-col py-2">
+            {LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="border-b border-line py-3.5 text-[15px] font-medium text-body last:border-0"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/videos/marcar-reuniao"
+              onClick={() => setOpen(false)}
+              className="btn-primary my-4"
+            >
+              Marcar reunião
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

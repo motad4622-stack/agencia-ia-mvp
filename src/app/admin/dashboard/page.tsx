@@ -8,8 +8,10 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6 py-10 w-full">
-      <Dashboard />
+    <section className="bg-white py-12">
+      <div className="container-page">
+        <Dashboard />
+      </div>
     </section>
   );
 }

@@ -60,16 +60,19 @@ export default function ContactoSitesIaPage() {
   }
 
   return (
-    <section className="mx-auto max-w-2xl px-4 sm:px-6 py-20 w-full">
-      <div className="text-center mb-10">
-        <p className="eyebrow mx-auto mb-6">Sites com IA para Empresas</p>
-        <h1 className="text-4xl font-extrabold tracking-tight text-ink">Pedido de briefing</h1>
-        <p className="mt-3 text-body max-w-md mx-auto">
-          Conta-nos sobre o teu negócio — entramos em contacto em 24h úteis.
-        </p>
-      </div>
+    <section className="bg-white py-16 sm:py-20">
+      <div className="container-page max-w-3xl!">
+        <div className="mb-10 text-center">
+          <p className="eyebrow">Sites com IA para empresas</p>
+          <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            Pedido de briefing
+          </h1>
+          <p className="mx-auto mt-4 max-w-md text-[17px] leading-relaxed text-body">
+            Conta-nos sobre o teu negócio — respondemos dentro de 24h úteis.
+          </p>
+        </div>
 
-      <form onSubmit={handleSubmit} className="card p-8 sm:p-10 space-y-7">
+        <form onSubmit={handleSubmit} className="card space-y-7 p-7 sm:p-9">
         <div className="grid sm:grid-cols-2 gap-5">
           <Field label="Nome" name="clientName" required />
           <Field label="Email" name="clientEmail" type="email" required />
@@ -93,13 +96,13 @@ export default function ContactoSitesIaPage() {
             {NEEDS_OPTIONS.map((need) => (
               <label
                 key={need}
-                className="flex items-center gap-2.5 rounded-xl border border-line px-3.5 py-2.5 text-sm text-body cursor-pointer transition-colors hover:border-accent-blue/40 has-[:checked]:border-accent-blue has-[:checked]:bg-accent-blue-50 has-[:checked]:text-ink"
+                className="flex cursor-pointer items-center gap-2.5 rounded-md border border-line-strong px-3.5 py-2.5 text-sm text-body transition-colors hover:border-blue/50 has-[:checked]:border-blue has-[:checked]:bg-blue-50 has-[:checked]:text-ink"
               >
                 <input
                   type="checkbox"
                   checked={selectedNeeds.includes(need)}
                   onChange={() => toggleNeed(need)}
-                  className="rounded border-line text-brand focus:ring-accent-blue-50"
+                  className="rounded-sm border-line-strong text-navy focus:ring-blue/30"
                 />
                 {need}
               </label>
@@ -128,7 +131,8 @@ export default function ContactoSitesIaPage() {
         <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-50">
           {submitting ? "A enviar…" : "Enviar pedido"}
         </button>
-      </form>
+        </form>
+      </div>
     </section>
   );
 }

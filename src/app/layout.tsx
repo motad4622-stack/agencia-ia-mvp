@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NextIA Marketing — Vídeos de Alojamento & Sites com IA",
+  title: "NextIA Marketing — Vídeos de alojamento e sites com IA",
   description:
-    "Vídeos cinematográficos gerados por IA para o teu alojamento e sites com inteligência artificial integrada para o teu negócio.",
+    "Transformamos as fotografias do teu alojamento em vídeo e construímos sites com IA integrada para pequenas e médias empresas.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-surface text-ink">
+      <body className="flex min-h-full flex-col bg-white text-ink">
         <Nav />
         <main className="flex-1 flex flex-col">{children}</main>
         <Footer />
