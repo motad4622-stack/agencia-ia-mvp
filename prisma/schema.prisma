@@ -1,0 +1,45 @@
+// Prisma schema — Agência de IA (Vídeos de Alojamento + Sites com IA)
+//
+// MVP: SQLite local (fácil de demonstrar, zero configuração).
+// Produção: trocar `provider` para "postgresql" e `DATABASE_URL` para a
+// connection string do Postgres/Supabase — o resto do schema não muda.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Pedido de reunião para o serviço de vídeos. A geração do vídeo em si NÃO
+// é automática no site — a equipa marca uma reunião com o cliente, recebe
+// as fotos à parte, e produz o vídeo manualmente (com o apoio de IA).
+model MeetingRequest {
+  id           String   @id @default(cuid())
+  clientName   String
+  clientEmail  String
+  clientPhone  String?
+  propertyName String
+  propertyType String // "airbnb" | "alojamento_local" | "hotel"
+  message      String?
+  status       String   @default("novo") // novo | em_contacto | fechado
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model WebsiteLead {
+  id           String   @id @default(cuid())
+  clientName   String
+  clientEmail  String
+  clientPhone  String?
+  companyName  String
+  businessType String
+  needs        String // texto livre ou JSON com checkboxes selecionadas
+  budgetRange  String? // "<1000" | "1000-5000" | "5000+" | "nao_sei"
+  message      String?
+  status       String   @default("novo") // novo | em_contacto | fechado
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

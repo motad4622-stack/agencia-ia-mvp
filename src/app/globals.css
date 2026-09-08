@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/*
+ * MVP: interface só em modo claro (a proposta de valor e as capturas de
+ * ecrã partem de fundo branco). O body já define bg-white/text-gray-900
+ * via Tailwind em src/app/layout.tsx — por isso não redefinimos aqui um
+ * `body { background }` fora de uma @layer, que ganharia sempre à frente
+ * das classes utilitárias do Tailwind na cascade.
+ */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Cores da marca NextIA Marketing (a partir do logótipo) */
+  --color-brand: #0b2545;
+  --color-brand-dark: #071a33;
+  --color-brand-light: #123a6b;
+  --color-accent-green: #1fa860;
+  --color-accent-blue: #2f7fe0;
+}

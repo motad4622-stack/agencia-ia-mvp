@@ -1,0 +1,268 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+interface MeetingRequest {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string | null;
+  propertyName: string;
+  propertyType: string;
+  message: string | null;
+  status: string;
+  createdAt: string;
+}
+
+interface WebsiteLead {
+  id: string;
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string | null;
+  companyName: string;
+  businessType: string;
+  needs: string;
+  budgetRange: string | null;
+  message: string | null;
+  status: string;
+  createdAt: string;
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  novo: "Novo",
+  em_contacto: "Em contacto",
+  fechado: "Fechado",
+};
+
+const STATUS_COLOR: Record<string, string> = {
+  novo: "bg-blue-100 text-blue-700",
+  em_contacto: "bg-amber-100 text-amber-700",
+  fechado: "bg-green-100 text-green-700",
+};
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleString("pt-PT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export function Dashboard() {
+  const router = useRouter();
+  const [tab, setTab] = useState<"meetings" | "leads">("meetings");
+  const [meetingRequests, setMeetingRequests] = useState<MeetingRequest[]>([]);
+  const [leads, setLeads] = useState<WebsiteLead[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function loadData() {
+    const [meetingsRes, leadsRes] = await Promise.all([
+      fetch("/api/admin/meeting-requests", { cache: "no-store" }),
+      fetch("/api/admin/leads", { cache: "no-store" }),
+    ]);
+    if (meetingsRes.status === 401 || leadsRes.status === 401) {
+      router.push("/admin");
+      return;
+    }
+    setMeetingRequests(await meetingsRes.json());
+    setLeads(await leadsRes.json());
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    // Polling deliberado (dashboard interno, sem websockets no MVP):
+    // busca ao montar e depois a cada 8s.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadData();
+    const interval = setInterval(loadData, 8000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function handleMeetingStatus(id: string, status: string) {
+    await fetch(`/api/admin/meeting-requests/${id}/status`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    loadData();
+  }
+
+  async function handleLeadStatus(id: string, status: string) {
+    await fetch(`/api/admin/leads/${id}/status`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    loadData();
+  }
+
+  async function handleLogout() {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin");
+    router.refresh();
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-bold text-brand">Painel de administração</h1>
+        <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-brand">
+          Sair
+        </button>
+      </div>
+
+      <div className="flex gap-2 border-b border-gray-200 mb-6">
+        <TabButton active={tab === "meetings"} onClick={() => setTab("meetings")}>
+          Pedidos de Reunião — Vídeos ({meetingRequests.length})
+        </TabButton>
+        <TabButton active={tab === "leads"} onClick={() => setTab("leads")}>
+          Leads de Sites com IA ({leads.length})
+        </TabButton>
+      </div>
+
+      {loading && <p className="text-gray-500 text-sm">A carregar…</p>}
+
+      {!loading && tab === "meetings" && (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-gray-500 border-b border-gray-200">
+                <th className="py-2 pr-4">Estado</th>
+                <th className="py-2 pr-4">Cliente</th>
+                <th className="py-2 pr-4">Imóvel</th>
+                <th className="py-2 pr-4">Mensagem</th>
+                <th className="py-2 pr-4">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {meetingRequests.map((mr) => (
+                <tr key={mr.id} className="border-b border-gray-100 align-top">
+                  <td className="py-3 pr-4">
+                    <select
+                      value={mr.status}
+                      onChange={(e) => handleMeetingStatus(mr.id, e.target.value)}
+                      className={`rounded-full px-2.5 py-1 text-xs font-semibold border-0 ${STATUS_COLOR[mr.status] ?? "bg-gray-100 text-gray-700"}`}
+                    >
+                      {Object.entries(STATUS_LABEL).map(([value, label]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="py-3 pr-4">
+                    <div className="font-medium text-brand">{mr.clientName}</div>
+                    <div className="text-gray-500 text-xs">{mr.clientEmail}</div>
+                    {mr.clientPhone && <div className="text-gray-500 text-xs">{mr.clientPhone}</div>}
+                  </td>
+                  <td className="py-3 pr-4">
+                    <div className="text-brand">{mr.propertyName}</div>
+                    <div className="text-gray-500 text-xs">{mr.propertyType}</div>
+                  </td>
+                  <td className="py-3 pr-4 text-gray-700 max-w-xs">
+                    <p className="line-clamp-2">{mr.message || "—"}</p>
+                  </td>
+                  <td className="py-3 pr-4 text-gray-500">{formatDate(mr.createdAt)}</td>
+                </tr>
+              ))}
+              {meetingRequests.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="py-8 text-center text-gray-400">
+                    Ainda não há pedidos de reunião.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {!loading && tab === "leads" && (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-gray-500 border-b border-gray-200">
+                <th className="py-2 pr-4">Estado</th>
+                <th className="py-2 pr-4">Empresa</th>
+                <th className="py-2 pr-4">Contacto</th>
+                <th className="py-2 pr-4">Orçamento</th>
+                <th className="py-2 pr-4">Necessidades</th>
+                <th className="py-2 pr-4">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leads.map((lead) => (
+                <tr key={lead.id} className="border-b border-gray-100 align-top">
+                  <td className="py-3 pr-4">
+                    <select
+                      value={lead.status}
+                      onChange={(e) => handleLeadStatus(lead.id, e.target.value)}
+                      className={`rounded-full px-2.5 py-1 text-xs font-semibold border-0 ${STATUS_COLOR[lead.status] ?? "bg-gray-100 text-gray-700"}`}
+                    >
+                      {Object.entries(STATUS_LABEL).map(([value, label]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="py-3 pr-4">
+                    <div className="font-medium text-brand">{lead.companyName}</div>
+                    <div className="text-gray-500 text-xs">{lead.businessType}</div>
+                  </td>
+                  <td className="py-3 pr-4">
+                    <div className="text-brand">{lead.clientName}</div>
+                    <div className="text-gray-500 text-xs">{lead.clientEmail}</div>
+                    {lead.clientPhone && (
+                      <div className="text-gray-500 text-xs">{lead.clientPhone}</div>
+                    )}
+                  </td>
+                  <td className="py-3 pr-4 text-gray-700">{lead.budgetRange || "—"}</td>
+                  <td className="py-3 pr-4 text-gray-700 max-w-xs">
+                    <p className="line-clamp-2">{lead.needs}</p>
+                    {lead.message && (
+                      <p className="text-gray-500 text-xs mt-1 line-clamp-2">{lead.message}</p>
+                    )}
+                  </td>
+                  <td className="py-3 pr-4 text-gray-500">{formatDate(lead.createdAt)}</td>
+                </tr>
+              ))}
+              {leads.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="py-8 text-center text-gray-400">
+                    Ainda não há leads de sites com IA.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TabButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+        active ? "border-brand text-brand" : "border-transparent text-gray-500 hover:text-gray-700"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
