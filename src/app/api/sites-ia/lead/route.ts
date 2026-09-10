@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -26,6 +27,7 @@ export async function POST(request: NextRequest) {
       );
     }
     const fields = parsed.data;
+    const sessao = await auth();
 
     const lead = await prisma.websiteLead.create({
       data: {
@@ -38,6 +40,7 @@ export async function POST(request: NextRequest) {
         budgetRange: fields.budgetRange || null,
         message: fields.message || null,
         status: "novo",
+        userId: sessao?.user?.id ?? null,
       },
     });
 

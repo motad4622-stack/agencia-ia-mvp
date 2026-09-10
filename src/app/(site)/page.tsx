@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GatedLink } from "@/components/auth/AuthDialog";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
@@ -362,9 +363,9 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <Link href="/videos/marcar-reuniao" className="btn-on-navy">
+              <GatedLink href="/videos/marcar-reuniao" className="btn-on-navy">
                 Marcar uma reunião
-              </Link>
+              </GatedLink>
               <Link href="#servicos" className="btn-ghost-on-navy">
                 Ver os serviços
               </Link>

@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
@@ -24,6 +25,7 @@ export async function POST(request: NextRequest) {
       );
     }
     const fields = parsed.data;
+    const sessao = await auth();
 
     const meetingRequest = await prisma.meetingRequest.create({
       data: {
@@ -34,6 +36,7 @@ export async function POST(request: NextRequest) {
         propertyType: fields.propertyType,
         message: fields.message || null,
         status: "novo",
+        userId: sessao?.user?.id ?? null,
       },
     });
 

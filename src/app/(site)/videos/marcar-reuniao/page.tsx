@@ -1,8 +1,15 @@
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 import { getBookingUrl } from "@/lib/brand";
 import { BookingEmbed } from "@/components/BookingEmbed";
 import { MeetingRequestForm } from "@/components/MeetingRequestForm";
 
-export default function MarcarReuniaoPage() {
+export default async function MarcarReuniaoPage() {
+  const sessao = await auth();
+  if (!sessao?.user) {
+    redirect("/entrar?next=" + encodeURIComponent("/videos/marcar-reuniao"));
+  }
+
   const bookingUrl = getBookingUrl();
 
   return (

@@ -26,6 +26,8 @@ model MeetingRequest {
   propertyType String // "airbnb" | "alojamento_local" | "hotel"
   message      String?
   status       String   @default("novo") // novo | em_contacto | fechado
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -41,6 +43,68 @@ model WebsiteLead {
   budgetRange  String? // "<1000" | "1000-5000" | "5000+" | "nao_sei"
   message      String?
   status       String   @default("novo") // novo | em_contacto | fechado
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+// ── Contas ──────────────────────────────────────────────────────────
+// Marcar reunião e pedir briefing exigem conta iniciada. As sessões são
+// JWT (é o que o Auth.js exige para o login com password), por isso o
+// modelo Session existe só porque o adaptador Prisma o pede.
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String? // nulo em contas criadas só com Google
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts        Account[]
+  sessions        Session[]
+  meetingRequests MeetingRequest[]
+  websiteLeads    WebsiteLead[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

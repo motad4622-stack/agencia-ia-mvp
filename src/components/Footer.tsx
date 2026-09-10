@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { GatedLink } from "@/components/auth/AuthDialog";
 import { BRAND_NAME } from "@/lib/brand";
 
 const columns = [
@@ -21,8 +22,8 @@ const columns = [
   {
     title: "Contacto",
     links: [
-      { href: "/videos/marcar-reuniao", label: "Marcar reunião" },
-      { href: "/sites-ia/contacto", label: "Pedir briefing" },
+      { href: "/videos/marcar-reuniao", label: "Marcar reunião", conta: true },
+      { href: "/sites-ia/contacto", label: "Pedir briefing", conta: true },
     ],
   },
 ];
@@ -38,9 +39,9 @@ export function Footer() {
               IA aplicada ao marketing, ao conteúdo e à presença digital de
               alojamentos e pequenas empresas.
             </p>
-            <Link href="/videos/marcar-reuniao" className="btn-primary mt-6">
+            <GatedLink href="/videos/marcar-reuniao" className="btn-primary mt-6">
               Marcar reunião
-            </Link>
+            </GatedLink>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3">
@@ -52,12 +53,21 @@ export function Footer() {
                 <ul className="mt-4 space-y-3">
                   {column.links.map((link) => (
                     <li key={link.href + link.label}>
-                      <Link
-                        href={link.href}
-                        className="text-[15px] text-body transition-colors hover:text-navy"
-                      >
-                        {link.label}
-                      </Link>
+                      {"conta" in link && link.conta ? (
+                        <GatedLink
+                          href={link.href}
+                          className="text-[15px] text-body transition-colors hover:text-navy"
+                        >
+                          {link.label}
+                        </GatedLink>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-[15px] text-body transition-colors hover:text-navy"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -72,9 +82,17 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {BRAND_NAME}. Todos os direitos reservados.
           </p>
-          <Link href="/admin" className="transition-colors hover:text-body">
-            Área da equipa
-          </Link>
+          <span className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link href="/privacidade" className="transition-colors hover:text-body">
+              Privacidade
+            </Link>
+            <Link href="/termos" className="transition-colors hover:text-body">
+              Termos
+            </Link>
+            <Link href="/admin" className="transition-colors hover:text-body">
+              Área da equipa
+            </Link>
+          </span>
         </div>
       </div>
     </footer>

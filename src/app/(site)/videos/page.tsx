@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GatedLink } from "@/components/auth/AuthDialog";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { VideoExample } from "@/components/VideoExample";
@@ -50,9 +51,9 @@ export default function VideosPage() {
               equipamento e sem marcar sessões fotográficas.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/videos/marcar-reuniao" className="btn-primary">
+              <GatedLink href="/videos/marcar-reuniao" className="btn-primary">
                 Marcar reunião
-              </Link>
+              </GatedLink>
               <Link href="/#exemplos" className="btn-secondary">
                 Ver exemplos
               </Link>
@@ -130,9 +131,9 @@ export default function VideosPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/videos/marcar-reuniao" className="btn-primary mt-8 w-full">
+                <GatedLink href="/videos/marcar-reuniao" className="btn-primary mt-8 w-full">
                   Marcar reunião
-                </Link>
+                </GatedLink>
               </div>
             </Reveal>
           </div>

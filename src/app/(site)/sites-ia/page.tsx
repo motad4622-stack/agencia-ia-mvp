@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GatedLink } from "@/components/auth/AuthDialog";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { SiteExample } from "@/components/SiteExample";
@@ -50,9 +51,9 @@ export default function SitesIaPage() {
               que se mantém atualizado.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/sites-ia/contacto" className="btn-primary">
+              <GatedLink href="/sites-ia/contacto" className="btn-primary">
                 Pedir um briefing
-              </Link>
+              </GatedLink>
               <Link href="/#exemplos" className="btn-secondary">
                 Ver exemplos
               </Link>
@@ -116,9 +117,9 @@ export default function SitesIaPage() {
           </Reveal>
 
           <div className="mt-14 text-center">
-            <Link href="/sites-ia/contacto" className="btn-primary">
+            <GatedLink href="/sites-ia/contacto" className="btn-primary">
               Pedir um briefing
-            </Link>
+            </GatedLink>
           </div>
         </div>
       </section>

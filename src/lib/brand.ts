@@ -6,6 +6,14 @@ export const BRAND_NAME = "NextIA Marketing";
 // o pagamento é combinado na reunião, não no site).
 export const VIDEO_PRICE_EUR = 49;
 
+// WhatsApp de contacto. `NUMBER` é o formato internacional sem sinais, que
+// é o que o wa.me aceita; `DISPLAY` é o que se mostra a quem lê.
+export const WHATSAPP_NUMBER = "351910961434";
+export const WHATSAPP_DISPLAY = "910 961 434";
+
+/** Destinos que exigem conta iniciada antes de lá chegar. */
+export const GATED_PATHS = ["/videos/marcar-reuniao", "/sites-ia/contacto"];
+
 /**
  * Link da agenda de marcação — Google Calendar "Appointment schedule"
  * (calendar.app.google/...) ou Calendly (calendly.com/...). Vazio -> usa

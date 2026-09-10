@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import { Logo } from "@/components/Logo";
+import { GatedLink } from "@/components/auth/AuthDialog";
 
 const LINKS = [
   { href: "/#servicos", label: "Serviços" },
@@ -13,6 +15,8 @@ const LINKS = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const { data: sessao } = useSession();
+  const primeiroNome = sessao?.user?.name?.trim().split(" ")[0];
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white">
@@ -34,12 +38,28 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
+          {sessao?.user && (
+            <span className="hidden items-center gap-2.5 text-sm text-muted lg:flex">
+              {primeiroNome && (
+                <span className="max-w-[10rem] truncate">
+                  Olá, <span className="font-medium text-body">{primeiroNome}</span>
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="font-medium transition-colors hover:text-navy"
+              >
+                Sair
+              </button>
+            </span>
+          )}
+          <GatedLink
             href="/videos/marcar-reuniao"
             className="hidden btn-primary px-5! py-2.5! text-sm! sm:inline-flex"
           >
             Marcar reunião
-          </Link>
+          </GatedLink>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -82,13 +102,25 @@ export function Nav() {
                 {link.label}
               </Link>
             ))}
-            <Link
+            <GatedLink
               href="/videos/marcar-reuniao"
               onClick={() => setOpen(false)}
               className="btn-primary my-4"
             >
               Marcar reunião
-            </Link>
+            </GatedLink>
+            {sessao?.user && (
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  signOut({ callbackUrl: "/" });
+                }}
+                className="pb-4 text-left text-[15px] font-medium text-muted"
+              >
+                {primeiroNome ? `Sair da conta de ${primeiroNome}` : "Sair"}
+              </button>
+            )}
           </nav>
         </div>
       )}
