@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
-import { BrowserFrame } from "@/components/Mockups";
+import { SiteExample } from "@/components/SiteExample";
 
 const integrations = [
   {
@@ -58,7 +58,15 @@ export default function SitesIaPage() {
               </Link>
             </div>
           </div>
-          <BrowserFrame withChat />
+          <SiteExample
+            src="/exemplos/casa-do-pinhal.jpg"
+            alt="Site de alojamento local com o concierge de IA aberto"
+            domain="casadopinhal.exemplo"
+            href="/exemplos/casa-do-pinhal"
+            linkLabel="Abrir o site-exemplo"
+            description="Site-exemplo construído por nós, com concierge de IA a responder a preços, datas e regras da casa."
+            sizes="(min-width: 1024px) 540px, 92vw"
+          />
         </div>
       </section>
 

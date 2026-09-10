@@ -51,6 +51,9 @@
     color: #fff;
   }
   html {
+    /* O site é desenhado só em claro — evita que o browser o escureça
+       automaticamente e desalinhe as cores da marca. */
+    color-scheme: light;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }

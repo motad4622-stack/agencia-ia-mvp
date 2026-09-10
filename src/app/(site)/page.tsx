@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
-import { BrowserFrame } from "@/components/Mockups";
+import { SiteExample } from "@/components/SiteExample";
 import { VideoExample } from "@/components/VideoExample";
 import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
@@ -99,8 +99,12 @@ export default function HomePage() {
               duration="0:08"
               className="w-[92%]"
             />
-            <BrowserFrame
-              withChat
+            <SiteExample
+              src="/exemplos/casa-do-pinhal.jpg"
+              alt="Site de alojamento local com o concierge de IA aberto"
+              domain="casadopinhal.exemplo"
+              sizes="(min-width: 1024px) 420px, 66vw"
+              priority
               className="relative z-10 -mt-12 ml-auto w-[72%] rounded-xl ring-6 ring-white sm:-mt-16"
             />
           </div>
@@ -170,7 +174,14 @@ export default function HomePage() {
           {/* Serviço 2 */}
           <Reveal className="mt-20 sm:mt-28">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <BrowserFrame withChat className="lg:order-2" />
+              <SiteExample
+                src="/exemplos/washandclean.jpg"
+                alt="Página inicial do site da Wash & Clean"
+                domain="washandclean.github.io"
+                href="https://washandclean.github.io/"
+                sizes="(min-width: 1024px) 540px, 92vw"
+                className="lg:order-2"
+              />
               <div className="lg:order-1">
                 <p className="eyebrow">02 — Empresas</p>
                 <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
@@ -284,12 +295,15 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Exemplos"
               title="Feito para ser visto."
-              description="Os vídeos abaixo são reais: foram gerados a partir das fotografias de um anúncio de alojamento, sem filmagens nem deslocações. Carrega no play."
+              description="Trabalho a sério, não maquetes: dois vídeos gerados a partir das fotografias de um anúncio de alojamento e dois sites que podes abrir e experimentar."
             />
           </Reveal>
 
           <Reveal delay={80}>
-            <div className="mt-14 grid gap-8 md:grid-cols-2">
+            <p className="mt-14 text-[13px] font-semibold tracking-wide text-muted uppercase">
+              Vídeos · a partir de fotografias
+            </p>
+            <div className="mt-6 grid gap-8 md:grid-cols-2">
               <VideoExample
                 src="/videos/walkthrough-interior.mp4"
                 poster="/videos/walkthrough-interior.jpg"
@@ -305,19 +319,26 @@ export default function HomePage() {
             </div>
 
             <div className="mt-16 border-t border-line pt-12">
-              <p className="eyebrow">Sites com IA</p>
-              <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink">
-                E do lado dos sites
-              </h3>
-              <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-body">
-                Estas peças são ilustrativas — mostram o tipo de site e de
-                integrações que construímos, e vão dar lugar a casos reais.
+              <p className="text-[13px] font-semibold tracking-wide text-muted uppercase">
+                Sites · abre e experimenta
               </p>
-              <div className="mt-8 grid gap-8 md:grid-cols-2">
-                <BrowserFrame withChat caption="Site com chatbot de apoio ao cliente" />
-                <BrowserFrame
-                  variant="conteudo"
-                  caption="Site institucional com automação de contactos"
+              <div className="mt-6 grid gap-10 md:grid-cols-2">
+                <SiteExample
+                  src="/exemplos/washandclean.jpg"
+                  alt="Página inicial do site da Wash & Clean"
+                  domain="washandclean.github.io"
+                  href="https://washandclean.github.io/"
+                  title="Wash & Clean — limpeza automóvel ao domicílio"
+                  description="Site de serviço local: marcação direta, antes-e-depois, zonas cobertas e contacto por WhatsApp sempre à mão."
+                />
+                <SiteExample
+                  src="/exemplos/casa-do-pinhal.jpg"
+                  alt="Site de alojamento local com o concierge de IA aberto"
+                  domain="casadopinhal.exemplo"
+                  href="/exemplos/casa-do-pinhal"
+                  linkLabel="Abrir o site-exemplo"
+                  title="Casa do Pinhal — alojamento local com concierge de IA"
+                  description="Construído por nós de raiz, com reserva direta e um assistente que responde a preços, datas e regras da casa. O alojamento é fictício; o site funciona."
                 />
               </div>
             </div>
