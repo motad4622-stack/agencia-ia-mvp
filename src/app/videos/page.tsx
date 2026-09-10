@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
-import { VideoFrame } from "@/components/Mockups";
+import { VideoExample } from "@/components/VideoExample";
 import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
 const steps = [
@@ -58,7 +58,11 @@ export default function VideosPage() {
               </Link>
             </div>
           </div>
-          <VideoFrame duration="0:24" />
+          <VideoExample
+            src="/videos/walkthrough-interior.mp4"
+            poster="/videos/walkthrough-interior.jpg"
+            duration="0:08"
+          />
         </div>
       </section>
 

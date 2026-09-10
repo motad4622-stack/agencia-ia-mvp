@@ -2,7 +2,8 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
-import { BrowserFrame, VideoFrame } from "@/components/Mockups";
+import { BrowserFrame } from "@/components/Mockups";
+import { VideoExample } from "@/components/VideoExample";
 import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
 const facts = [
@@ -92,7 +93,12 @@ export default function HomePage() {
 
           {/* Composição visual dos dois serviços */}
           <div className="relative lg:pl-6">
-            <VideoFrame duration="0:24" className="w-[92%]" />
+            <VideoExample
+              src="/videos/walkthrough-interior.mp4"
+              poster="/videos/walkthrough-interior.jpg"
+              duration="0:08"
+              className="w-[92%]"
+            />
             <BrowserFrame
               withChat
               className="relative z-10 -mt-12 ml-auto w-[72%] rounded-xl ring-6 ring-white sm:-mt-16"
@@ -153,7 +159,11 @@ export default function HomePage() {
                   <span className="transition-transform group-hover:translate-x-1">→</span>
                 </Link>
               </div>
-              <VideoFrame duration="0:31" />
+              <VideoExample
+                src="/videos/walkthrough-exterior.mp4"
+                poster="/videos/walkthrough-exterior.jpg"
+                duration="0:08"
+              />
             </div>
           </Reveal>
 
@@ -274,23 +284,42 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Exemplos"
               title="Feito para ser visto."
-              description="O que entregamos: vídeos prontos a publicar e sites com IA a trabalhar por trás. As peças abaixo são representações do formato do trabalho."
+              description="Os vídeos abaixo são reais: foram gerados a partir das fotografias de um anúncio de alojamento, sem filmagens nem deslocações. Carrega no play."
             />
           </Reveal>
 
           <Reveal delay={80}>
             <div className="mt-14 grid gap-8 md:grid-cols-2">
-              <VideoFrame duration="0:24" caption="Vídeo walkthrough — apartamento T2" />
-              <VideoFrame
-                duration="0:38"
-                variant="exterior"
-                caption="Vídeo walkthrough — moradia com exterior"
+              <VideoExample
+                src="/videos/walkthrough-interior.mp4"
+                poster="/videos/walkthrough-interior.jpg"
+                duration="0:08"
+                caption="Interior — sala comum, a partir de uma fotografia do anúncio"
               />
-              <BrowserFrame withChat caption="Site com chatbot de apoio ao cliente" />
-              <BrowserFrame
-                variant="conteudo"
-                caption="Site institucional com automação de contactos"
+              <VideoExample
+                src="/videos/walkthrough-exterior.mp4"
+                poster="/videos/walkthrough-exterior.jpg"
+                duration="0:08"
+                caption="Exterior ao anoitecer — a partir de uma fotografia do anúncio"
               />
+            </div>
+
+            <div className="mt-16 border-t border-line pt-12">
+              <p className="eyebrow">Sites com IA</p>
+              <h3 className="mt-3 text-2xl font-bold tracking-tight text-ink">
+                E do lado dos sites
+              </h3>
+              <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-body">
+                Estas peças são ilustrativas — mostram o tipo de site e de
+                integrações que construímos, e vão dar lugar a casos reais.
+              </p>
+              <div className="mt-8 grid gap-8 md:grid-cols-2">
+                <BrowserFrame withChat caption="Site com chatbot de apoio ao cliente" />
+                <BrowserFrame
+                  variant="conteudo"
+                  caption="Site institucional com automação de contactos"
+                />
+              </div>
             </div>
           </Reveal>
         </div>
