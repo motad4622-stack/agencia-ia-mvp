@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 /** Só aceitamos destinos internos, para o `next` não virar redirect aberto. */
 function destinoSeguro(valor: string | undefined): string {
-  if (!valor) return "/videos/marcar-reuniao";
+  if (!valor) return "/marcar-reuniao";
   const limpo = decodeURIComponent(valor);
   if (!limpo.startsWith("/") || limpo.startsWith("//")) {
-    return "/videos/marcar-reuniao";
+    return "/marcar-reuniao";
   }
   return GATED_PATHS.some((p) => limpo.startsWith(p)) ? limpo : "/";
 }

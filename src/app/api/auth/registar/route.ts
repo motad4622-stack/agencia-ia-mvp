@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { notificarConta } from "@/lib/email";
 
 /** Criação de conta com email e palavra-passe. */
 const schema = z.object({
@@ -49,9 +50,11 @@ export async function POST(request: Request) {
     );
   }
 
-  await prisma.user.create({
+  const utilizador = await prisma.user.create({
     data: { name, email, passwordHash: await bcrypt.hash(password, 12) },
   });
+
+  after(() => notificarConta(utilizador.id));
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

@@ -55,7 +55,7 @@ export function Nav() {
             </span>
           )}
           <GatedLink
-            href="/videos/marcar-reuniao"
+            href="/marcar-reuniao"
             className="hidden btn-primary px-5! py-2.5! text-sm! sm:inline-flex"
           >
             Marcar reunião
@@ -103,7 +103,7 @@ export function Nav() {
               </Link>
             ))}
             <GatedLink
-              href="/videos/marcar-reuniao"
+              href="/marcar-reuniao"
               onClick={() => setOpen(false)}
               className="btn-primary my-4"
             >

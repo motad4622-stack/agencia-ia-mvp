@@ -22,7 +22,7 @@ const columns = [
   {
     title: "Contacto",
     links: [
-      { href: "/videos/marcar-reuniao", label: "Marcar reunião", conta: true },
+      { href: "/marcar-reuniao", label: "Marcar reunião", conta: true },
       { href: "/sites-ia/contacto", label: "Pedir briefing", conta: true },
     ],
   },
@@ -39,7 +39,7 @@ export function Footer() {
               IA aplicada ao marketing, ao conteúdo e à presença digital de
               alojamentos e pequenas empresas.
             </p>
-            <GatedLink href="/videos/marcar-reuniao" className="btn-primary mt-6">
+            <GatedLink href="/marcar-reuniao" className="btn-primary mt-6">
               Marcar reunião
             </GatedLink>
           </div>

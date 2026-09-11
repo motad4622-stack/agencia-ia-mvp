@@ -14,24 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Pedido de reunião para o serviço de vídeos. A geração do vídeo em si NÃO
-// é automática no site — a equipa marca uma reunião com o cliente, recebe
-// as fotos à parte, e produz o vídeo manualmente (com o apoio de IA).
-model MeetingRequest {
-  id           String   @id @default(cuid())
-  clientName   String
-  clientEmail  String
-  clientPhone  String?
-  propertyName String
-  propertyType String // "airbnb" | "alojamento_local" | "hotel"
-  message      String?
-  status       String   @default("novo") // novo | em_contacto | fechado
-  userId       String?
-  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
 model WebsiteLead {
   id           String   @id @default(cuid())
   clientName   String
@@ -66,7 +48,7 @@ model User {
 
   accounts        Account[]
   sessions        Session[]
-  meetingRequests MeetingRequest[]
+  bookings        Booking[]
   websiteLeads    WebsiteLead[]
 }
 
@@ -107,4 +89,61 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// ── Marcações ───────────────────────────────────────────────────────
+// A agenda é do próprio site (sem Google Calendar). slotKey guarda o
+// início da reunião enquanto a marcação está ativa e fica a null quando
+// é cancelada: o índice único impede duas pessoas na mesma hora, mas
+// deixa voltar a marcar um horário libertado.
+
+model Booking {
+  id          String   @id @default(cuid())
+  service     String // videos | sites
+  startsAt    DateTime
+  durationMin Int      @default(30)
+  slotKey     String?  @unique
+  clientName  String
+  clientEmail String
+  clientPhone String?
+  subject     String // nome do imóvel ou da empresa
+  subjectType String // airbnb | alojamento_local | hotel | tipo de negócio
+  message     String?
+  status      String   @default("marcada") // marcada | realizada | cancelada
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([startsAt])
+}
+
+// Períodos em que a agenda não aceita marcações (férias, uma tarde ocupada).
+model BlockedSlot {
+  id        String   @id @default(cuid())
+  startsAt  DateTime
+  endsAt    DateTime
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@index([startsAt, endsAt])
+}
+
+// Registo de cada email enviado. Um envio falhado nunca desfaz a
+// marcação: fica aqui com o erro, e pode ser reenviado do /admin.
+model EmailLog {
+  id         String   @id @default(cuid())
+  kind       String // booking_client | booking_admin | account_admin | briefing_client | briefing_admin
+  refId      String // id da marcação, da conta ou do briefing
+  to         String
+  subject    String
+  status     String // enviado | falhou
+  providerId String?
+  error      String?
+  attempts   Int      @default(1)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([status])
+  @@index([kind, refId])
 }

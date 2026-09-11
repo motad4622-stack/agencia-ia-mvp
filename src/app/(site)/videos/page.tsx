@@ -51,7 +51,7 @@ export default function VideosPage() {
               equipamento e sem marcar sessões fotográficas.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <GatedLink href="/videos/marcar-reuniao" className="btn-primary">
+              <GatedLink href="/marcar-reuniao?servico=videos" className="btn-primary">
                 Marcar reunião
               </GatedLink>
               <Link href="/#exemplos" className="btn-secondary">
@@ -131,7 +131,7 @@ export default function VideosPage() {
                     </li>
                   ))}
                 </ul>
-                <GatedLink href="/videos/marcar-reuniao" className="btn-primary mt-8 w-full">
+                <GatedLink href="/marcar-reuniao?servico=videos" className="btn-primary mt-8 w-full">
                   Marcar reunião
                 </GatedLink>
               </div>

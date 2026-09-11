@@ -12,14 +12,5 @@ export const WHATSAPP_NUMBER = "351910961434";
 export const WHATSAPP_DISPLAY = "910 961 434";
 
 /** Destinos que exigem conta iniciada antes de lá chegar. */
-export const GATED_PATHS = ["/videos/marcar-reuniao", "/sites-ia/contacto"];
+export const GATED_PATHS = ["/marcar-reuniao", "/sites-ia/contacto"];
 
-/**
- * Link da agenda de marcação — Google Calendar "Appointment schedule"
- * (calendar.app.google/...) ou Calendly (calendly.com/...). Vazio -> usa
- * o formulário de fallback em /videos/marcar-reuniao.
- */
-export function getBookingUrl(): string | null {
-  const url = process.env.NEXT_PUBLIC_BOOKING_URL;
-  return url && url.trim().length > 0 ? url.trim() : null;
-}

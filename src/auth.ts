@@ -1,10 +1,12 @@
 import NextAuth from "next-auth";
+import { after } from "next/server";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { notificarConta } from "@/lib/email";
 
 /*
  * Contas de utilizador do site (nada a ver com o /admin, que continua a
@@ -71,6 +73,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  events: {
+    // Só as contas criadas pelo adaptador passam aqui (Google). As de
+    // palavra-passe são criadas em /api/auth/registar, que avisa por si.
+    createUser({ user }) {
+      if (user.id) {
+        const id = user.id;
+        after(() => notificarConta(id));
+      }
+    },
+  },
   callbacks: {
     jwt({ token, user }) {
       if (user?.id) token.sub = user.id;

@@ -6,7 +6,10 @@ export async function GET() {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Não autorizado." }, { status: 401 });
   }
-
-  const requests = await prisma.meetingRequest.findMany({ orderBy: { createdAt: "desc" } });
-  return NextResponse.json(requests);
+  const marcacoes = await prisma.booking.findMany({
+    orderBy: { startsAt: "desc" },
+    take: 200,
+    include: { user: { select: { email: true, createdAt: true } } },
+  });
+  return NextResponse.json(marcacoes);
 }

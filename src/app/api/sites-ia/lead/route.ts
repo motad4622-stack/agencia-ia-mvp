@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { sendWebsiteLeadConfirmationEmail } from "@/lib/email";
+import { notificarBriefing } from "@/lib/email";
 
 const leadSchema = z.object({
   clientName: z.string().min(2, "Nome demasiado curto."),
@@ -44,11 +44,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    await sendWebsiteLeadConfirmationEmail({
-      to: lead.clientEmail,
-      clientName: lead.clientName,
-      companyName: lead.companyName,
-    });
+    // Aviso ao administrador e confirmação ao cliente, depois de responder.
+    after(() => notificarBriefing(lead.id));
 
     return NextResponse.json({ id: lead.id });
   } catch (err) {

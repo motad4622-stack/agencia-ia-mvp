@@ -363,7 +363,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <GatedLink href="/videos/marcar-reuniao" className="btn-on-navy">
+              <GatedLink href="/marcar-reuniao" className="btn-on-navy">
                 Marcar uma reunião
               </GatedLink>
               <Link href="#servicos" className="btn-ghost-on-navy">
