@@ -5,10 +5,9 @@ import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
 import { SiteExample } from "@/components/SiteExample";
 import { VideoExample } from "@/components/VideoExample";
-import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
 const facts = [
-  { value: `${VIDEO_PRICE_EUR}€`, label: "Ponto de partida por vídeo" },
+  { value: "100% online", label: "Sem filmagens nem deslocações" },
   { value: "30 min", label: "Duração da reunião inicial" },
   { value: "24h úteis", label: "Resposta a cada pedido" },
 ];

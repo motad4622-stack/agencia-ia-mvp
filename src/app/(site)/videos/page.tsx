@@ -3,7 +3,6 @@ import { GatedLink } from "@/components/auth/AuthDialog";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { VideoExample } from "@/components/VideoExample";
-import { VIDEO_PRICE_EUR } from "@/lib/brand";
 
 const steps = [
   {
@@ -91,15 +90,15 @@ export default function VideosPage() {
         </div>
       </section>
 
-      {/* Preço + o que inclui */}
+      {/* O que inclui — os valores ficam para a reunião */}
       <section className="border-t border-line bg-surface py-20 sm:py-24">
         <div className="container-page">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <SectionHeading
-                eyebrow="Investimento"
-                title={`A partir de ${VIDEO_PRICE_EUR}€ por vídeo`}
-                description="É o ponto de partida para um imóvel. O valor final depende do número de imóveis, do detalhe e dos formatos que precisas — combinamos isso na reunião, sem surpresas."
+                eyebrow="Na reunião"
+                title="Combinamos tudo à medida do teu alojamento"
+                description="Formatos, prazos e valores ficam fechados na reunião, depois de percebermos o imóvel e onde o vídeo vai ser usado. Sem compromisso."
               />
             </Reveal>
             <Reveal delay={80}>

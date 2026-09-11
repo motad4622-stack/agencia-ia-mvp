@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BRAND_NAME, VIDEO_PRICE_EUR } from "@/lib/brand";
+import { BRAND_NAME } from "@/lib/brand";
 
 /*
  * Termos de utilização — texto-base, a validar antes de se assumir como
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "As regras de utilização do site, das contas e dos pedidos de reunião.",
 };
 
-const ATUALIZADO_EM = "10 de setembro de 2026";
+const ATUALIZADO_EM = "11 de setembro de 2026";
 
 const seccoes = [
   {
@@ -38,7 +38,7 @@ const seccoes = [
   {
     titulo: "Preços e orçamentos",
     conteudo: [
-      `Os valores indicados no site, como os ${VIDEO_PRICE_EUR}€ por vídeo, são pontos de partida por imóvel e não constituem proposta. O preço final depende do âmbito de cada trabalho e é acordado por escrito antes de começarmos.`,
+      "Não publicamos preços no site. O valor de cada trabalho depende do que for combinado na reunião e é acordado por escrito antes de começarmos.",
     ],
   },
   {

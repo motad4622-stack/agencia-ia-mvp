@@ -24,9 +24,9 @@ const OPCOES = [
       "Olá! Vi o site da NextIA Marketing e quero um site com IA para a minha empresa.",
   },
   {
-    label: "Quero saber preços",
+    label: "Quero marcar uma reunião",
     mensagem:
-      "Olá! Vi o site da NextIA Marketing e queria saber os preços dos vossos serviços.",
+      "Olá! Vi o site da NextIA Marketing e queria marcar uma reunião.",
   },
   {
     label: "Tenho outra questão",
