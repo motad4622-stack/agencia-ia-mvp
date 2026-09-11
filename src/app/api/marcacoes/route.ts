@@ -1,12 +1,11 @@
+import crypto from "crypto";
 import { after, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { AGENDA, TIPOS_IMOVEL, fimDe, horaEstaLivre } from "@/lib/agenda";
+import { AGENDA, TIPOS_IMOVEL, horaEstaLivre } from "@/lib/agenda";
 import { carregarOcupacao } from "@/lib/agenda-servidor";
-import { linkGoogleCalendar } from "@/lib/ics";
-import { linkReuniao } from "@/lib/email-templates";
 import { notificarMarcacao } from "@/lib/email";
 
 /** Quantas reuniões futuras uma conta pode ter marcadas ao mesmo tempo. */
@@ -71,6 +70,7 @@ export async function POST(request: Request) {
         startsAt: inicio,
         durationMin: AGENDA.duracaoMin,
         slotKey: inicio.toISOString(),
+        cancelToken: crypto.randomBytes(24).toString("base64url"),
         clientName: d.nome,
         clientEmail: d.email,
         clientPhone: d.telefone || null,
@@ -95,22 +95,8 @@ export async function POST(request: Request) {
   // e se falharem a marcação já está gravada (ficam no registo de emails).
   after(() => notificarMarcacao(marcacao.id));
 
-  const reuniao = linkReuniao();
   return NextResponse.json(
-    {
-      id: marcacao.id,
-      inicio: marcacao.startsAt.toISOString(),
-      email: marcacao.clientEmail,
-      linkCalendario: linkGoogleCalendar({
-        inicio: marcacao.startsAt,
-        fim: fimDe(marcacao.startsAt, marcacao.durationMin),
-        titulo: "Reunião NextIA Marketing",
-        descricao: reuniao
-          ? `Videochamada de ${marcacao.durationMin} minutos. Link: ${reuniao}`
-          : `Videochamada de ${marcacao.durationMin} minutos. O link segue por email antes da reunião.`,
-        local: reuniao ?? "Videochamada",
-      }),
-    },
+    { id: marcacao.id },
     { status: 201 },
   );
 }

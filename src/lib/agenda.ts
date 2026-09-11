@@ -98,7 +98,7 @@ export function diaEmLisboa(instante: Date): string {
   return `${p.year}-${p.month}-${p.day}`;
 }
 
-function somarDias(dia: string, n: number): string {
+export function somarDias(dia: string, n: number): string {
   const [a, m, d] = dia.split("-").map(Number);
   return new Date(Date.UTC(a, m - 1, d + n)).toISOString().slice(0, 10);
 }

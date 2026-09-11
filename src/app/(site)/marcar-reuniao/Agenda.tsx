@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -14,7 +13,6 @@ import { useEffect, useMemo, useState } from "react";
 
 type Servico = "videos" | "sites";
 type Dia = { dia: string; horas: string[] };
-type Confirmada = { inicio: string; email: string; linkCalendario: string };
 
 const SERVICOS: { id: Servico; titulo: string; texto: string }[] = [
   { id: "videos", titulo: "Vídeo de IA para alojamento", texto: "Para Airbnb, alojamento local ou hotel." },
@@ -77,7 +75,6 @@ export function Agenda({
 
   const [erro, setErro] = useState<string | null>(null);
   const [aEnviar, setAEnviar] = useState(false);
-  const [confirmada, setConfirmada] = useState<Confirmada | null>(null);
 
   useEffect(() => {
     let ativo = true;
@@ -177,50 +174,13 @@ export function Agenda({
         return;
       }
 
-      setConfirmada({ inicio: dados.inicio, email: dados.email, linkCalendario: dados.linkCalendario });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      router.push(`/marcar-reuniao/confirmada?id=${encodeURIComponent(dados.id)}`);
+      return;
     } catch {
       setErro("Sem ligação ao servidor. Verifica a internet e tenta outra vez.");
     } finally {
       setAEnviar(false);
     }
-  }
-
-  /* ── Marcação feita ─────────────────────────────────────────────── */
-
-  if (confirmada) {
-    const inicio = new Date(confirmada.inicio);
-    return (
-      <div className="card mt-10 max-w-2xl p-7 sm:p-10">
-        <span className="grid h-14 w-14 place-items-center rounded-full bg-green-50 text-green">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-        <p className="eyebrow mt-6 text-green!">Marcação confirmada</p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          A tua reunião está marcada.
-        </h2>
-        <div className="mt-6 rounded-lg border border-line bg-surface p-5">
-          <p className="text-[17px] font-semibold text-ink">{maiuscula(fmtDiaLongo.format(inicio))}</p>
-          <p className="mt-1 text-[15px] text-body">
-            {fmtHora.format(inicio)} · 30 minutos · videochamada
-          </p>
-        </div>
-        <p className="mt-6 text-[15px] leading-relaxed text-body">
-          Enviámos a confirmação para <strong className="text-ink">{confirmada.email}</strong>, com
-          um convite para o teu calendário. Se não a vires em alguns minutos, espreita o spam.
-        </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href={confirmada.linkCalendario} target="_blank" rel="noopener noreferrer" className="btn-primary">
-            Adicionar ao Google Calendar
-          </a>
-          <Link href="/" className="btn-secondary">
-            Voltar ao início
-          </Link>
-        </div>
-      </div>
-    );
   }
 
   /* ── Formulário ─────────────────────────────────────────────────── */

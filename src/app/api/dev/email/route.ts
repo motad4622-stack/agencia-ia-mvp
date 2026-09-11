@@ -4,7 +4,10 @@ import { linkGoogleCalendar } from "@/lib/ics";
 import {
   tplBriefingAdmin,
   tplBriefingCliente,
+  tplCancelamentoAdmin,
   tplContaAdmin,
+  tplLembreteAdmin,
+  tplLembreteCliente,
   tplMarcacaoAdmin,
   tplMarcacaoCliente,
 } from "@/lib/email-templates";
@@ -49,12 +52,18 @@ export async function GET(request: Request) {
     local: "Videochamada",
   });
 
+  const cancelar = "http://localhost:3000/marcacao/exemplo";
+  const segunda = { ...marcacao, id: "exemplo-2", inicio: lisboaParaUtc("2026-09-15", "14:30"), nome: "Ricardo Pereira", servico: "sites", assunto: "Clínica Exemplo", tipoAssunto: "Clínica de estética", mensagem: null, telefone: null };
+
   const email =
     tipo === "booking_admin" ? tplMarcacaoAdmin(marcacao)
     : tipo === "account_admin" ? tplContaAdmin({ nome: "Marta Silva", email: "marta.silva@exemplo.pt", metodo: "password", criadaEm: marcacao.contaCriadaEm, total: 12 })
     : tipo === "briefing_admin" ? tplBriefingAdmin(briefing)
     : tipo === "briefing_client" ? tplBriefingCliente(briefing)
-    : tplMarcacaoCliente(marcacao, cal);
+    : tipo === "reminder_client" ? tplLembreteCliente(marcacao, cal, cancelar)
+    : tipo === "reminder_admin" ? tplLembreteAdmin(lisboaParaUtc("2026-09-15", "00:00"), [marcacao, segunda])
+    : tipo === "cancel_admin" ? tplCancelamentoAdmin(marcacao)
+    : tplMarcacaoCliente(marcacao, cal, cancelar);
 
   return new NextResponse(email.html, { headers: { "Content-Type": "text/html; charset=utf-8" } });
 }

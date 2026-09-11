@@ -37,26 +37,6 @@ const siteSteps = [
   { n: "04", title: "Publicamos e melhoramos", text: "Acompanhamos depois de estar no ar." },
 ];
 
-const testimonials = [
-  {
-    quote:
-      "O vídeo ficou incrível — as reservas aumentaram assim que o publiquei no anúncio.",
-    author: "Marta S.",
-    role: "Anfitriã Airbnb, Lisboa",
-  },
-  {
-    quote:
-      "Finalmente um site com um chatbot que responde mesmo às perguntas dos clientes.",
-    author: "Ricardo P.",
-    role: "Fundador, clínica de estética",
-  },
-  {
-    quote:
-      "Marcámos uma chamada de 15 minutos e em poucos dias tinha um vídeo pronto a publicar.",
-    author: "Inês C.",
-    role: "Gestora de Alojamento Local, Porto",
-  },
-];
 
 export default function HomePage() {
   return (
@@ -248,48 +228,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Prova social ────────────────────────────────────────────── */}
-      <section className="bg-white py-20 sm:py-28">
-        <div className="container-page">
-          <Reveal>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="eyebrow">Resultados</p>
-              <p className="mt-4 text-2xl font-bold leading-snug tracking-tight text-ink sm:text-[2rem] sm:leading-[1.25]">
-                O objetivo não é parecer tecnológico. É fazer o teu negócio
-                funcionar melhor.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {testimonials.map((t) => (
-                <figure key={t.author} className="card card-hover flex h-full flex-col p-7">
-                  <blockquote className="flex-1 text-[15px] leading-relaxed text-ink">
-                    “{t.quote}”
-                  </blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
-                    <span className="grid h-9 w-9 place-items-center rounded-full bg-navy text-xs font-semibold text-white">
-                      {t.author.charAt(0)}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-semibold text-ink">{t.author}</span>
-                      <span className="block text-xs text-muted">{t.role}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </Reveal>
-
-          <p className="mt-8 text-center text-xs text-muted">
-            Testemunhos ilustrativos, a substituir por depoimentos reais de clientes.
-          </p>
-        </div>
-      </section>
-
       {/* ── Exemplos ────────────────────────────────────────────────── */}
-      <section id="exemplos" className="border-y border-line bg-surface py-20 sm:py-28">
+      <section id="exemplos" className="bg-white py-20 sm:py-28">
         <div className="container-page">
           <Reveal>
             <SectionHeading

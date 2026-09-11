@@ -110,6 +110,11 @@ model Booking {
   subjectType String // airbnb | alojamento_local | hotel | tipo de negócio
   message     String?
   status      String   @default("marcada") // marcada | realizada | cancelada
+  // Link de cancelamento enviado ao cliente (o email não exige sessão).
+  cancelToken    String?   @unique
+  cancelledAt    DateTime?
+  // Hora a que saiu o lembrete da véspera — garante que só sai uma vez.
+  reminderSentAt DateTime?
   userId      String?
   user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt   DateTime @default(now())
@@ -133,7 +138,7 @@ model BlockedSlot {
 // marcação: fica aqui com o erro, e pode ser reenviado do /admin.
 model EmailLog {
   id         String   @id @default(cuid())
-  kind       String // booking_client | booking_admin | account_admin | briefing_client | briefing_admin
+  kind       String // booking_client | booking_admin | reminder_client | reminder_admin | cancel_admin | account_admin | briefing_client | briefing_admin
   refId      String // id da marcação, da conta ou do briefing
   to         String
   subject    String

@@ -291,7 +291,7 @@ function resumoMarcacao(m: DadosMarcacao): string {
 
 /* ── 1. Marcação confirmada → cliente ─────────────────────────────── */
 
-export function tplMarcacaoCliente(m: DadosMarcacao, linkCalendario: string): Email {
+export function tplMarcacaoCliente(m: DadosMarcacao, linkCalendario: string, linkCancelar: string): Email {
   const reuniao = linkReuniao();
   const quando = `${formatarDia(m.inicio)} às ${formatarHora(m.inicio)}`;
 
@@ -321,7 +321,7 @@ export function tplMarcacaoCliente(m: DadosMarcacao, linkCalendario: string): Em
       ["Telefone", m.telefone ? esc(m.telefone) : null],
     ]) +
     nota(
-      `<strong style="color:${C.ink};">Precisas de mudar alguma coisa?</strong><br>Responde a este email ou fala connosco por WhatsApp — ${WHATSAPP_DISPLAY}.`,
+      `<strong style="color:${C.ink};">Não podes ir?</strong><br>${link(linkCancelar, "Cancela a reunião aqui")} — o horário fica livre para outra pessoa. Para mudar a hora, cancela e marca outra, responde a este email ou fala connosco por WhatsApp — ${WHATSAPP_DISPLAY}.`,
     ) +
     assinatura(`Até breve,<br><strong style="color:${C.ink};">Equipa ${BRAND_NAME}</strong>`);
 
@@ -339,7 +339,8 @@ export function tplMarcacaoCliente(m: DadosMarcacao, linkCalendario: string): Em
     ``,
     `Adicionar ao calendário: ${linkCalendario}`,
     ``,
-    `Precisas de mudar alguma coisa? Responde a este email ou fala connosco por WhatsApp — ${WHATSAPP_DISPLAY}.`,
+    `Não podes ir? Cancela aqui: ${linkCancelar}`,
+    `Para mudar a hora, cancela e marca outra, responde a este email ou fala connosco por WhatsApp — ${WHATSAPP_DISPLAY}.`,
     ``,
     `Equipa ${BRAND_NAME} — ${SITE_URL}`,
   ].join("\n");
@@ -594,3 +595,175 @@ export function tplBriefingCliente(b: DadosBriefing): Email {
   };
 }
 
+
+/* ── 6. Lembrete da véspera → cliente ─────────────────────────────── */
+
+export function tplLembreteCliente(m: DadosMarcacao, linkCalendario: string, linkCancelar: string): Email {
+  const reuniao = linkReuniao();
+  const quando = `${formatarDia(m.inicio)} às ${formatarHora(m.inicio)}`;
+
+  const corpo =
+    heroi({
+      icone: "destaque-lembrete",
+      etiqueta: "Lembrete",
+      titulo: "A nossa reunião é amanhã",
+      texto: `Olá ${esc(primeiroNome(m.nome))}, só para lembrar: amanhã falamos sobre ${esc(sobreServico(m.servico))}.`,
+    }) +
+    resumoMarcacao(m) +
+    botoes(
+      reuniao ? { href: reuniao, texto: "Entrar na videochamada" } : { href: linkCalendario, texto: "Adicionar ao calendário" },
+    ) +
+    nota(
+      `<strong style="color:${C.ink};">Já não podes ir?</strong><br>${link(linkCancelar, "Cancela a reunião aqui")} — o horário fica livre para outra pessoa. Se preferires outra hora, cancela e marca de novo.`,
+    ) +
+    assinatura(`Até amanhã,<br><strong style="color:${C.ink};">Equipa ${BRAND_NAME}</strong>`);
+
+  const texto = [
+    `Lembrete: a nossa reunião é amanhã`,
+    ``,
+    `Olá ${primeiroNome(m.nome)}, amanhã falamos sobre ${sobreServico(m.servico)}.`,
+    ``,
+    `Quando: ${quando} (${m.duracaoMin} minutos)`,
+    `Formato: videochamada${reuniao ? ` — ${reuniao}` : " — o link segue por email antes da reunião"}`,
+    ``,
+    `Já não podes ir? Cancela aqui: ${linkCancelar}`,
+    ``,
+    `Equipa ${BRAND_NAME} — ${SITE_URL}`,
+  ].join("\n");
+
+  return {
+    assunto: `Lembrete: a nossa reunião é amanhã às ${formatarHora(m.inicio)}`,
+    html: layout({
+      titulo: "A nossa reunião é amanhã",
+      preheader: `${maiuscula(quando)} · videochamada de ${m.duracaoMin} minutos.`,
+      corpo,
+      motivo: "Recebeste este email porque marcaste uma reunião em nextiamarketing.website.",
+    }),
+    texto,
+  };
+}
+
+/* ── 7. Agenda do dia seguinte → administrador ────────────────────── */
+
+export function tplLembreteAdmin(dia: Date, lista: DadosMarcacao[]): Email {
+  const reuniao = linkReuniao();
+  const n = lista.length;
+  const titulo = n === 1 ? "Amanhã tens 1 reunião" : `Amanhã tens ${n} reuniões`;
+
+  const cartoes = lista
+    .map((m) => {
+      const fim = fimDe(m.inicio, m.duracaoMin);
+      const contacto = [
+        link(`mailto:${encodeURIComponent(m.email)}`, esc(m.email)),
+        m.telefone ? link(`tel:${m.telefone.replace(/[^\d+]/g, "")}`, esc(m.telefone)) : "",
+      ]
+        .filter(Boolean)
+        .join(" &nbsp;·&nbsp; ");
+      return `
+  <tr><td class="px" style="padding:16px 40px 0 40px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:separate;background:${C.surface};border:1px solid ${C.line};border-radius:12px;">
+      <tr><td style="padding:18px 22px;font-family:${FONT};">
+        <p style="margin:0;font-size:13px;line-height:18px;font-weight:600;color:${C.blue};">${formatarHora(m.inicio)} – ${formatarHora(fim)}</p>
+        <p style="margin:6px 0 0 0;font-size:16px;line-height:24px;font-weight:600;color:${C.ink};">${esc(m.nome)}</p>
+        <p style="margin:2px 0 0 0;font-size:14px;line-height:21px;color:${C.body};">${esc(nomeServico(m.servico))} · ${esc(m.assunto)} (${esc(valorTipo(m.servico, m.tipoAssunto))})</p>
+        <p style="margin:8px 0 0 0;font-size:14px;line-height:21px;">${contacto}</p>
+        ${m.mensagem ? `<p style="margin:10px 0 0 0;padding-top:10px;border-top:1px solid ${C.line};font-size:14px;line-height:21px;color:${C.body};">${paragrafos(m.mensagem)}</p>` : ""}
+      </td></tr>
+    </table>
+  </td></tr>`;
+    })
+    .join("");
+
+  const corpo =
+    heroi({
+      icone: "destaque-lembrete",
+      etiqueta: "Agenda de amanhã",
+      titulo,
+      texto: `${maiuscula(formatarDia(dia))}.`,
+    }) +
+    cartoes +
+    (reuniao
+      ? ""
+      : nota(
+          `<strong style="color:${C.ink};">Falta o link da videochamada.</strong><br>Lembra-te de o enviar a ${n === 1 ? "este cliente" : "cada cliente"} antes da reunião.`,
+        )) +
+    botoes({ href: `${SITE_URL}/admin/dashboard`, texto: "Ver no back-office" }) +
+    `<tr><td style="padding:0 0 24px 0;"></td></tr>`;
+
+  const texto = [
+    `${titulo} — ${formatarDia(dia)}`,
+    ``,
+    ...lista.flatMap((m) => [
+      `${formatarHora(m.inicio)} · ${m.nome} · ${nomeServico(m.servico)} · ${m.assunto}`,
+      `   ${m.email}${m.telefone ? ` · ${m.telefone}` : ""}`,
+    ]),
+    ``,
+    ...(reuniao ? [] : [`Falta enviar o link da videochamada.`, ``]),
+    `Back-office: ${SITE_URL}/admin/dashboard`,
+  ].join("\n");
+
+  return {
+    assunto: `${titulo} — ${formatarDia(dia)}`,
+    html: layout({
+      titulo,
+      preheader: lista.map((m) => `${formatarHora(m.inicio)} ${m.nome}`).join(" · "),
+      corpo,
+      motivo: "Notificação automática do site nextiamarketing.website.",
+    }),
+    texto,
+  };
+}
+
+/* ── 8. Reunião cancelada pelo cliente → administrador ────────────── */
+
+export function tplCancelamentoAdmin(m: DadosMarcacao): Email {
+  const quando = `${formatarDia(m.inicio)} às ${formatarHora(m.inicio)}`;
+
+  const corpo =
+    heroi({
+      icone: "destaque-cancelado",
+      etiqueta: "Reunião cancelada",
+      titulo: `${esc(primeiroNome(m.nome))} cancelou a reunião`,
+      texto: `O horário de ${esc(quando)} voltou a ficar livre na agenda.`,
+    }) +
+    resumoMarcacao(m) +
+    botoes(
+      { href: `${SITE_URL}/admin/dashboard`, texto: "Ver no back-office" },
+      { href: `mailto:${encodeURIComponent(m.email)}`, texto: `Escrever a ${esc(primeiroNome(m.nome))}` },
+    ) +
+    seccao("Cliente", [
+      ["Nome", esc(m.nome)],
+      ["Email", link(`mailto:${encodeURIComponent(m.email)}`, esc(m.email))],
+      ["Telefone", m.telefone ? link(`tel:${m.telefone.replace(/[^\d+]/g, "")}`, esc(m.telefone)) : null],
+    ]) +
+    seccao("Marcação", [
+      ["Serviço", esc(nomeServico(m.servico))],
+      [rotuloAssunto(m.servico), esc(m.assunto)],
+      [rotuloTipo(m.servico), esc(valorTipo(m.servico, m.tipoAssunto))],
+      ["Marcada em", dataHora(m.criadaEm)],
+    ]) +
+    `<tr><td style="padding:0 0 36px 0;"></td></tr>`;
+
+  const texto = [
+    `${m.nome} cancelou a reunião`,
+    ``,
+    `Era: ${quando}`,
+    `Serviço: ${nomeServico(m.servico)} · ${m.assunto}`,
+    `O horário voltou a ficar livre.`,
+    ``,
+    `Email: ${m.email}${m.telefone ? ` · Telefone: ${m.telefone}` : ""}`,
+    ``,
+    `Back-office: ${SITE_URL}/admin/dashboard`,
+  ].join("\n");
+
+  return {
+    assunto: `Reunião cancelada: ${m.nome} · ${dataCurta(m.inicio).slice(0, 5)} às ${formatarHora(m.inicio)}`,
+    html: layout({
+      titulo: "Reunião cancelada",
+      preheader: `${m.nome} cancelou · o horário de ${quando} ficou livre.`,
+      corpo,
+      motivo: "Notificação automática do site nextiamarketing.website.",
+    }),
+    texto,
+  };
+}

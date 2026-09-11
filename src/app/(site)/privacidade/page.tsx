@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Que dados recolhemos, para que servem, durante quanto tempo ficam guardados e como podes pedir para os apagar.",
 };
 
-const ATUALIZADO_EM = "10 de setembro de 2026";
+const ATUALIZADO_EM = "11 de setembro de 2026";
 
 const seccoes = [
   {
@@ -31,7 +31,8 @@ const seccoes = [
     conteudo: [
       "Quando crias conta: nome, email e uma palavra-passe guardada em forma cifrada (nunca vemos a palavra-passe original). Se entrares com o Google, recebemos o nome, o email e a fotografia de perfil associados a essa conta.",
       "Quando pedes uma reunião ou um briefing: nome, email, telefone (se o deres), dados do imóvel ou da empresa e o que escreveres na mensagem.",
-      "Não usamos cookies de publicidade nem de análise de terceiros. O único cookie que colocamos é o que mantém a tua sessão iniciada.",
+      "Contamos visitas com as estatísticas da Vercel, que não usam cookies nem guardam quem és: só sabemos quantas pessoas visitaram cada página e de onde vieram, em números agregados.",
+      "Não usamos cookies de publicidade. O único cookie que colocamos é o que mantém a tua sessão iniciada.",
     ],
   },
   {

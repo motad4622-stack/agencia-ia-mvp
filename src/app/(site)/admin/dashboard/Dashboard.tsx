@@ -15,6 +15,8 @@ interface Marcacao {
   subjectType: string;
   message: string | null;
   status: string;
+  reminderSentAt: string | null;
+  cancelledAt: string | null;
   createdAt: string;
 }
 
@@ -73,6 +75,9 @@ const TIPOS: Record<string, string> = { airbnb: "Airbnb", alojamento_local: "Alo
 const TIPOS_EMAIL: Record<string, string> = {
   booking_client: "Confirmação ao cliente",
   booking_admin: "Aviso de marcação",
+  reminder_client: "Lembrete ao cliente",
+  reminder_admin: "Agenda de amanhã",
+  cancel_admin: "Aviso de cancelamento",
   account_admin: "Aviso de conta nova",
   briefing_client: "Confirmação de briefing",
   briefing_admin: "Aviso de briefing",
@@ -377,6 +382,7 @@ function TabelaMarcacoes({
                     <div className="text-muted">
                       {fmtHora.format(inicio)} · {m.durationMin} min
                     </div>
+                    {m.reminderSentAt && <div className="mt-1 text-xs text-green">Lembrete enviado</div>}
                   </td>
                   <td className="py-4 pr-4">
                     <div className="font-medium text-ink">{m.clientName}</div>
@@ -406,6 +412,9 @@ function TabelaMarcacoes({
                         </option>
                       ))}
                     </select>
+                    {m.status === "cancelada" && m.cancelledAt && (
+                      <div className="mt-1 text-xs text-muted">pelo cliente</div>
+                    )}
                   </td>
                 </tr>
               );
