@@ -1,7 +1,7 @@
 # Prompt — conta obrigatória, marcações anónimas e WhatsApp
 
 Especificação da próxima fase do site da **NextIA Marketing**
-(`agencia-ia-mvp.vercel.app`). Escrito para ser lido de uma ponta à outra
+(`nextiamarketing.website`). Escrito para ser lido de uma ponta à outra
 antes de se mexer em código.
 
 ---
@@ -202,7 +202,7 @@ logótipo — senão o nome pessoal volta a aparecer, por outra porta.
 | --- | --- | --- |
 | 1 | Decidir A, B ou C para a agenda | muda o que se constrói |
 | 2 | `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` (Google Cloud Console → OAuth 2.0, tipo *Web application*) | sem isto não há entrada com Google |
-| 3 | Redirect URI a registar: `https://agencia-ia-mvp.vercel.app/api/auth/callback/google` e `http://localhost:3000/api/auth/callback/google` | exigência do Google |
+| 3 | Redirect URI a registar: `https://nextiamarketing.website/api/auth/callback/google` e `http://localhost:3000/api/auth/callback/google` | exigência do Google |
 | 4 | Confirmar o número: **910 961 434** | escrever mal um dígito manda contactos para um desconhecido |
 | 5 | Perfil de WhatsApp Business com o nome da marca | senão o teu nome aparece na conversa |
 | 6 | Validar os textos de `/privacidade` e `/termos` | responsabilidade legal é tua, não minha |
