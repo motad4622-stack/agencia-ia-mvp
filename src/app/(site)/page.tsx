@@ -24,6 +24,45 @@ const siteBenefits = [
   "Automações que tratam do trabalho repetitivo",
 ];
 
+const videoExamples = [
+  {
+    src: "/videos/walkthrough-interior.mp4",
+    poster: "/videos/walkthrough-interior.jpg",
+    duration: "0:08",
+    caption: "Sala comum",
+  },
+  {
+    src: "/videos/walkthrough-exterior.mp4",
+    poster: "/videos/walkthrough-exterior.jpg",
+    duration: "0:08",
+    caption: "Exterior ao anoitecer",
+  },
+  {
+    src: "/videos/cozinha.mp4",
+    poster: "/videos/cozinha.jpg",
+    duration: "0:05",
+    caption: "Cozinha e ilha",
+  },
+  {
+    src: "/videos/jantar.mp4",
+    poster: "/videos/jantar.jpg",
+    duration: "0:05",
+    caption: "Sala de jantar",
+  },
+  {
+    src: "/videos/quarto.mp4",
+    poster: "/videos/quarto.jpg",
+    duration: "0:05",
+    caption: "Quarto principal",
+  },
+  {
+    src: "/videos/piscina.mp4",
+    poster: "/videos/piscina.jpg",
+    duration: "0:05",
+    caption: "Piscina",
+  },
+];
+
 const videoSteps = [
   { n: "01", title: "Envias as fotografias", text: "As mesmas que já usas no anúncio servem." },
   { n: "02", title: "Criamos o vídeo com IA", text: "Damos movimento e ritmo ao espaço." },
@@ -235,7 +274,7 @@ export default function HomePage() {
             <SectionHeading
               eyebrow="Exemplos"
               title="Feito para ser visto."
-              description="Trabalho a sério, não maquetes: dois vídeos gerados a partir das fotografias de um anúncio de alojamento e dois sites que podes abrir e experimentar."
+              description="Trabalho a sério, não maquetes: seis vídeos gerados a partir das fotografias de um anúncio de alojamento — a casa toda, sem uma única filmagem — e dois sites que podes abrir e experimentar."
             />
           </Reveal>
 
@@ -243,20 +282,14 @@ export default function HomePage() {
             <p className="mt-14 text-[13px] font-semibold tracking-wide text-muted uppercase">
               Vídeos · a partir de fotografias
             </p>
-            <div className="mt-6 grid gap-8 md:grid-cols-2">
-              <VideoExample
-                src="/videos/walkthrough-interior.mp4"
-                poster="/videos/walkthrough-interior.jpg"
-                duration="0:08"
-                caption="Interior — sala comum, a partir de uma fotografia do anúncio"
-              />
-              <VideoExample
-                src="/videos/walkthrough-exterior.mp4"
-                poster="/videos/walkthrough-exterior.jpg"
-                duration="0:08"
-                caption="Exterior ao anoitecer — a partir de uma fotografia do anúncio"
-              />
+            <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {videoExamples.map((v) => (
+                <VideoExample key={v.src} src={v.src} poster={v.poster} duration={v.duration} caption={v.caption} />
+              ))}
             </div>
+            <p className="mt-6 text-[13px] text-muted">
+              Todos feitos a partir das fotografias do mesmo anúncio, sem filmagens nem deslocações.
+            </p>
 
             <div className="mt-16 border-t border-line pt-12">
               <p className="text-[13px] font-semibold tracking-wide text-muted uppercase">
